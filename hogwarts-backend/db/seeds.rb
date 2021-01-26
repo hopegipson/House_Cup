@@ -28,6 +28,6 @@ hogwarts_house_collection.each do |house|
     house_size = (SecureRandom.random_number(6) + 1).floor
     (1..house_size).each do |poke|
         username = Faker::Name.first_name
-        User.create(username: username, house_id: house.id)
+        User.create(username: username, password: "password", house_id: house.id)
       end
     end
