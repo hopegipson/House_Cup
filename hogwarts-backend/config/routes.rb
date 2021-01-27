@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :quizzes
+  resources :questions
   resources :users
   resources :usernames
   resources :houses

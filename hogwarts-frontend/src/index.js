@@ -1,7 +1,12 @@
 console.log("...testing")
 const BASE_URL = "http://localhost:3000"
 const HOUSES_URL = `${BASE_URL}/houses`
+const QUIZZES_URL = `${BASE_URL}/quizzes`
+
 const main = document.querySelector('main')
+const quizContainer = document.getElementById('quiz');
+const resultsContainer = document.getElementById('results');
+const submitButton = document.getElementById('submit');
 
 //fetch(`${BACKEND_URL}/test`)
 //  .then(response => response.json())
@@ -11,6 +16,12 @@ function fetchHouses() {
     fetch(HOUSES_URL)
      .then(resp => resp.json())
      .then(json => renderHouses(json));
+ }
+
+ function fetchQuizzes(){
+     fetch(QUIZZES_URL)
+     .then(resp => resp.json())
+     .then(json => renderQuizzes(json));
  }
 
  function renderHouses(houses) {
@@ -28,7 +39,7 @@ function fetchHouses() {
      table.classList.add("table-hover")
 
      houseUser = house.users  
-    // let headersArray = ["User", "Poinst Scored For House"]
+     //let headersArray = ["User", "Poinst Scored For House"]
     // createHeader(table, 2, headersArray)
      for (user of houseUser) {
         let tr = document.createElement('tr')
@@ -55,7 +66,7 @@ function fetchHouses() {
     })
   }
 
-  function createHeader(table, columns, array){
+function createHeader(table, columns, array){
     let tr = document.createElement('tr')
     for (var i = 0; i < columns; i++){
         let th = document.createElement('th')
@@ -65,7 +76,45 @@ function fetchHouses() {
     table.appendChild(tr)
   }
 
+function renderQuizzes(quizzes
+    ){  const output = [];
+       quizSelected = quizzes.find(function(e) { return e.name === "Hogwarts Trivia Challenge"})
+        selectQuestions = (quizSelected.questions)
+        quizzes.forEach(quiz => {
+            console.log(quiz) 
+        })
+
+        selectQuestions.forEach(
+          (currentQuestion, questionIndex) => {
+           let answers = document.createElement('div')
+           answers.classList.add('answers');
+           let questions = document.createElement('div')
+           questions.classList.add('questions');
+            for(letter in currentQuestion.answers){
+              let label = document.createElement('label')
+              let input = document.createElement('input')
+              input.setAttribute('type', 'radio')
+              input.setAttribute('name', `question${questionIndex}`)
+              input.setAttribute('value', `${letter}`)
+              label.appendChild(input)
+              label.innerHTML += `${letter}: ${currentQuestion.answers[letter]}`
+              answers.appendChild(label)
+            }
+          questions.innerHTML = `${currentQuestion.question}`
+          //questions.appendChild(answers)
+          const quizContainer = document.getElementById('quiz');
+           quizContainer.appendChild(questions)
+            quizContainer.appendChild(answers)
+          })
+      }     
+
+
+function showResults(){}
+
+
+
 
   document.addEventListener("DOMContentLoaded", () => {
     fetchHouses()
+    fetchQuizzes()
   });
