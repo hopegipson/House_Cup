@@ -72,7 +72,6 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
     }
 
 body {
-  background-image: url("https://cdnb.artstation.com/p/assets/images/images/013/498/821/4k/saby-menyhei-hogwartsinthesnow-final.jpg?1539869271"), url("paper.gif");
   background-repeat: no-repeat, repeat;
   background-size:cover;
   margin: 0;
@@ -81,15 +80,13 @@ body {
   line-height: 1.5;
   color: #adafae;
   text-align: left;
-  background-color: #020202;
+  background-color: #000000;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
 }
-.left {
-  background-color: tomato;
-  float: left;
+.left {  float: left;
   width: 25%;
     color: white;
   padding: 10px;
@@ -97,7 +94,6 @@ body {
   text-align: center;
 }
 .right {
-  background-color: teal;
   float: left;
   width: 25%;
   padding: 10px;
@@ -105,7 +101,6 @@ body {
   text-align: center;
 }
 .center2 {
-  background-color: rgb(166, 71, 255);
   float: left;
   width: 50%;
   color: white;
@@ -131,7 +126,7 @@ h1, h2, h3, h4, h5, h6 {
 p {
   margin-top: 0;
   margin-bottom: 1rem;
-  font-family: 'HogwartsFont';
+  font-family: 'HarryFont';
 
 }
 
@@ -4349,7 +4344,7 @@ input[type="button"].btn-block {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #2a9fd6;
+  background-color: #c5a742;
 }
 
 .nav-fill > .nav-link,
@@ -4808,7 +4803,23 @@ input[type="button"].btn-block {
   -ms-flex-direction: column;
   flex-direction: column;
   min-width: 0;
+  min-height: 180px;
   word-wrap: break-word;
+  background-color: #282828;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.cardAdjust {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 400;
+  height: 200;
+    word-wrap: break-word;
   background-color: #282828;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
@@ -6807,13 +6818,13 @@ a.close.disabled {
 }
 
 .bg-primary {
-  background-color: #2a9fd6 !important;
+  background-color: #661010!important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
 button.bg-primary:focus {
-  background-color: #2180ac !important;
+  background-color: #661010 !important;
 }
 
 .bg-secondary {

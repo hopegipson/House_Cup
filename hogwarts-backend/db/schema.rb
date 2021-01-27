@@ -17,6 +17,10 @@ ActiveRecord::Schema.define(version: 2021_01_26_212325) do
 
   create_table "houses", force: :cascade do |t|
     t.string "name"
+    t.string "image"
+    t.string "crest"
+    t.string "color"
+    t.integer "points", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
