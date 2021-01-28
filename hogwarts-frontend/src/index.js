@@ -1,16 +1,12 @@
-console.log("...testing")
+
 const BASE_URL = "http://localhost:3000"
 const HOUSES_URL = `${BASE_URL}/houses`
 const QUIZZES_URL = `${BASE_URL}/quizzes`
-
 const main = document.querySelector('main')
-const quizContainer = document.getElementById('quiz');
-const resultsContainer = document.getElementById('results');
-const submitButton = document.getElementById('submit');
+const quizContainer = document.getElementById('quiz')
+const resultsContainer = document.getElementById('results')
+const submitButton = document.getElementById('submit')
 
-//fetch(`${BACKEND_URL}/test`)
-//  .then(response => response.json())
-//  .then(parsedResponse => console.log(parsedResponse));
 
 function fetchHouses() {
     fetch(HOUSES_URL)
@@ -60,7 +56,6 @@ function fetchHouses() {
 
 
     div.appendChild(p)
-    console.log(p)
      div.appendChild(table)
     left.appendChild(div)
     })
@@ -80,9 +75,6 @@ function renderQuizzes(quizzes
     ){  const output = [];
        quizSelected = quizzes.find(function(e) { return e.name === "Hogwarts Trivia Challenge"})
         selectQuestions = (quizSelected.questions)
-        quizzes.forEach(quiz => {
-            console.log(quiz) 
-        })
 
         selectQuestions.forEach(
           (currentQuestion, questionIndex) => {
@@ -102,14 +94,63 @@ function renderQuizzes(quizzes
             }
           questions.innerHTML = `${currentQuestion.question}`
           //questions.appendChild(answers)
+          
           const quizContainer = document.getElementById('quiz');
+
            quizContainer.appendChild(questions)
             quizContainer.appendChild(answers)
+
           })
+          let quizContainer = document.getElementById('quiz');
+          let submitBtn = document.createElement('button')
+          submitBtn.classList.add('submitQuiz');
+          submitBtn.setAttribute('quiz-id' , quizSelected.id); 
+          submitBtn.innerHTML = "Submit Quiz"
+          submitBtn.addEventListener('click', resultQuiz)
+          quizContainer.append(submitBtn)
+          //const submitButton = document.getElementById('submit');
+       // submitButton.addEventListener('click', showResults)
       }     
 
 
-function showResults(){}
+function renderResults(quiz){
+  const quizContainer = document.getElementById('quiz');
+  const answers = document.getElementsByClassName('answers')
+  let numberCorrect = 0;
+  quiz.questions.forEach( (currentQuestion, questionIndex) => {
+
+    const answerI = answers[questionIndex];
+
+    let userAnswer = 0
+    for (var i = 0, length = answerI.childElementCount; i < length; i++) {
+      if (answerI.children[i].children[0].checked) {
+       userAnswer = (answerI.children[i].children[0].value);
+      }
+      else if (answerI.children[i].children[0].checked == false){
+        answerI.children[i].children[0].disabled = true
+      }
+    }
+
+    if(userAnswer === currentQuestion.correct_answer){
+      numberCorrect++;
+      answers[questionIndex].style.color = 'lightgreen';
+    }
+    else{
+      answers[questionIndex].style.color = 'red';
+    }
+  });
+  const resultsContainer = document.getElementById('results')
+  resultsContainer.innerHTML = `${numberCorrect} out of ${quiz.questions.length}`;
+}
+
+
+
+function resultQuiz(event) {
+  let valueQ = event.target.attributes[1].value
+  fetch(`${QUIZZES_URL}/${valueQ}`)
+  .then(resp => resp.json())
+  .then(json => renderResults(json));
+}
 
 
 
