@@ -5,6 +5,7 @@ const QUIZZES_URL = `${BASE_URL}/quizzes`
 const main = document.querySelector('main')
 const quizElement = document.getElementById('quiz')
 const resultsContainer = document.getElementById('results')
+const quizContainer = document.getElementById('contain')
 //const buttonsContainer = document.getElementById('buttonsContainer')
 
 let currentSlide = 0;
@@ -112,7 +113,8 @@ function renderQuizzes(quizzes, quizName
           
           const slides = document.querySelectorAll(".slide");
 
-          showSlide(currentSlide, slides);
+          //showSlide(currentSlide, slides);
+          showSlide(0, slides);
 
       
       } 
@@ -178,9 +180,13 @@ function renderResults(quiz){
 function resultQuiz(event) {
   console.log(event.target.attributes)
   let valueQ = event.target.attributes[1].value
+  if (valueQ == 1){
   fetch(`${QUIZZES_URL}/${valueQ}`)
   .then(resp => resp.json())
-  .then(json => renderResults(json));
+  .then(json => renderResults(json));}
+  else if (valueQ == 2){
+    console.log("not ready with 2 yet")
+  }
 }
 
 function showSlide(n, slideholder) {
@@ -221,25 +227,72 @@ function showPreviousSlide(event) {
   showSlide(currentSlide - 1, slidepassed);
 }
 
-function getNameFromButton(){
-  console.log("this is working")
+function triviaButton(event){
+  let quizNamed = event.target.attributes.quiz_name.value
+  resetQuizSpace()
+  fetchQuizzes(quizNamed)
+  let selectedTriv = document.getElementById("trivia");
+  selectedTriv.innerHTML = "Restart Trivia"
+  resetSortingButton()
+}
+
+function sortingButton(event){
+  let quizNamed = event.target.attributes.quiz_name.value
+  resetQuizSpace()
+  fetchQuizzes(quizNamed)
+  let selectedSort = document.getElementById("sorting");
+  selectedSort.innerHTML = "Restart Sorting"
+  resetTriviaButton()
+}
+
+function resetQuizSpace(){
+  let quizContainer = document.getElementById('contain')
+  let resultsContainer = document.getElementById('results')
+  quizContainer.innerHTML = ""
+  resultsContainer.innerHTML = ""
+  let divone = document.createElement('div')
+  divone.classList.add('quiz-container');
+  let divquiz = document.createElement('div')
+  divquiz.setAttribute('id', 'quiz')
+  divone.appendChild(divquiz)
+  quizContainer.appendChild(divone)
+
+
+
+
+  console.log(quizContainer)
+}
+
+function resetTriviaButton(){
+ let selectedTriv = document.getElementById("trivia");
+ selectedTriv.innerHTML = "Trivia Challenge"
+}
+
+function resetSortingButton(){
+  let selectedSort = document.getElementById("sorting");
+  selectedSort.innerHTML = "Sorting Hat"
 }
 
 function createBasicQuizButtons(){
   let triviaBtn = document.createElement('button')
   triviaBtn.setAttribute('quiz_name', "Hogwarts Trivia Challenge"); 
-  //submitBtn.setAttribute('quiz-id' , quizSelected.id); 
   triviaBtn.innerHTML = "Trivia Challenge"
   triviaBtn.id = 'trivia'
-  triviaBtn.addEventListener("click", getNameFromButton())
+  triviaBtn.addEventListener("click", triviaButton)
+  let sortingBtn = document.createElement('button')
+  sortingBtn.setAttribute('quiz_name', "Hogwarts Sorting Hat"); 
+  sortingBtn.innerHTML = "Sorting Hat"
+  sortingBtn.id = 'sorting'
+  sortingBtn.addEventListener("click", sortingButton)
   const buttonsContainer =  document.getElementById('buttonsContainer');
   buttonsContainer.append(triviaBtn)
+  buttonsContainer.append(sortingBtn)
+
 
 }
 
 
   document.addEventListener("DOMContentLoaded", () => {
-   
     fetchHouses()
     createBasicQuizButtons()
   // fetchQuizzes("Hogwarts Trivia Challenge")
