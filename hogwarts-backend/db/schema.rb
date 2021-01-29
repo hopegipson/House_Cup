@@ -29,6 +29,10 @@ ActiveRecord::Schema.define(version: 4) do
     t.string "question"
     t.text "answers"
     t.string "correct_answer"
+    t.string "gryffindor_answer"
+    t.string "hufflepuff_answer"
+    t.string "slytherin_answer"
+    t.string "ravenclaw_answer"
     t.bigint "quiz_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

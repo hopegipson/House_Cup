@@ -68,13 +68,18 @@ hogwarts_house_collection.each do |house|
       end
 
     quiz = Quiz.all.find_by(id: 1)
+    quiz2 = Quiz.all.find_by(id: 2)
 
 
 DATA3 = {
-    question_keys: %w[question answers quiz correct_answer],
+    question_keys: %w[question answers quiz correct_answer gryffindor_answer hufflepuff_answer slytherin_answer ravenclaw_answer],
      questions: [
-       ['What house at Hogwarts does Harry belong to?', {"A"=>"Slytherin", "B"=>"Hufflepuff", "C"=>"Slytherin", "D"=>"Gryffindor"}, quiz, "D"],
-       ['What position does Harry play on his Quidditch team?', {"A"=>"Bludger", "B"=>"Chaser", "C"=>"Seeker", "D"=>"Keeper"}, quiz, "C"]
+       ['What house at Hogwarts does Harry belong to?', {"A"=>"Slytherin", "B"=>"Hufflepuff", "C"=>"Slytherin", "D"=>"Gryffindor"}, quiz, "D", nil, nil, nil, nil],
+       ['What position does Harry play on his Quidditch team?', {"A"=>"Bludger", "B"=>"Chaser", "C"=>"Seeker", "D"=>"Keeper"}, quiz, "C", nil, nil, nil, nil], 
+       ['What is your favorite animal', {"A"=>"Lion", "B"=>"Badger", "C"=>"Snake", "D"=>"Raven"}, quiz2, nil, "A", "B", "C", "D"], 
+       ['What is your best trait', {"A"=>"Bravery", "B"=>"Intelligence", "C"=>"Vengeance", "D"=>"Finding Things"}, quiz2, nil, "A", "D", "C", "B"]
+
+
      ]
    }.freeze
 
@@ -85,5 +90,7 @@ DATA3 = {
         end
         new_question.save
       end
+
+
 
 
