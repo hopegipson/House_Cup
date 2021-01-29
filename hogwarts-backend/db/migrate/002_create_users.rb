@@ -4,7 +4,8 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :username
       t.string :patronus
       t.references :house, null: false, foreign_key: true
-
+      t.text :scores
+      t.integer :house_points
       t.timestamps
     end
   end

@@ -4,7 +4,13 @@ class CreateHouses < ActiveRecord::Migration[6.0]
       t.string :name
       t.string :image
       t.string :crest
-      t.string :color
+      t.string :primary_color
+      t.string :secondary_color
+      t.string :mascot
+      t.string :element
+      t.text :house_information
+      t.string :traits
+
       t.integer :points, default: 0
 
       t.timestamps

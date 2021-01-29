@@ -19,7 +19,12 @@ ActiveRecord::Schema.define(version: 4) do
     t.string "name"
     t.string "image"
     t.string "crest"
-    t.string "color"
+    t.string "primary_color"
+    t.string "secondary_color"
+    t.string "mascot"
+    t.string "element"
+    t.text "house_information"
+    t.string "traits"
     t.integer "points", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -41,7 +46,6 @@ ActiveRecord::Schema.define(version: 4) do
 
   create_table "quizzes", force: :cascade do |t|
     t.string "name"
-    t.string "quizType"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -50,6 +54,8 @@ ActiveRecord::Schema.define(version: 4) do
     t.string "username"
     t.string "patronus"
     t.bigint "house_id", null: false
+    t.text "scores"
+    t.integer "house_points"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["house_id"], name: "index_users_on_house_id"
