@@ -175,6 +175,71 @@ function renderResults(quiz){
   resultsContainer.innerHTML = `${numberCorrect} out of ${quiz.questions.length}`;
 }
 
+function renderHouseResults(quiz){
+  const quizElement = document.getElementById('quiz');
+  const answers = document.getElementsByClassName('answers')
+  let gryffindorCount = 0;
+  let slytherinCount = 0;
+  let hufflepuffCount = 0;
+  let ravenclawCount = 0;
+
+  quiz.questions.forEach( (currentQuestion, questionIndex) => {
+
+    const answerI = answers[questionIndex];
+
+    let userAnswer = 0
+    for (var i = 0, length = answerI.childElementCount; i < length; i+=2) {
+      if (answerI.children[i].children[0].checked) {
+       userAnswer = (answerI.children[i].children[0].value);
+      }
+      else if (answerI.children[i].children[0].checked == false){
+        answerI.children[i].children[0].disabled = true
+      }
+    }
+
+    if(userAnswer === currentQuestion.gryffindor_answer){
+      gryffindorCount++;
+      answers[questionIndex].style.color = 'red';
+    }
+    else if (userAnswer === currentQuestion.slytherin_answer){
+      slytherinCount++;
+      answers[questionIndex].style.color = 'green';
+    }
+    else if (userAnswer === currentQuestion.hufflepuff_answer){
+      hufflepuffCount++;
+      answers[questionIndex].style.color = 'yellow';
+    }
+    else if (userAnswer === currentQuestion.ravenclaw_answer){
+      ravenclawCount++;
+      answers[questionIndex].style.color = 'purple';
+    }
+  });
+ let chosenHouse = calculateHouseResults(gryffindorCount, slytherinCount, hufflepuffCount, ravenclawCount)
+ console.log(chosenHouse)
+  const resultsContainer = document.getElementById('results')
+  resultsContainer.innerHTML = `${chosenHouse} is your new House! Should show gryffindor.someinformation about it`;
+}
+
+function calculateHouseResults(gryffindor, slytherin, hufflepuff, ravenclaw){
+ largestNumber = Math.max(gryffindor, slytherin, hufflepuff, ravenclaw)
+ let house = []
+ if (gryffindor == largestNumber){ house.push("Gryffindor")}
+ else if (slytherin == largestNumber){ house.push("Slytherin")}
+ else if (ravenclaw == largestNumber){ house.push("Ravenclaw")}
+ else if (hufflepuff == largestNumber){ house.push("Hufflepuff")}
+
+ if (house.length == 1){
+   return house[0]
+ }
+ else if(house.length == 2){
+   console.log("tiebreaker not yet created")
+ }
+
+
+
+ console.log(largestNumber)
+}
+
 
 
 function resultQuiz(event) {
@@ -185,7 +250,9 @@ function resultQuiz(event) {
   .then(resp => resp.json())
   .then(json => renderResults(json));}
   else if (valueQ == 2){
-    console.log("not ready with 2 yet")
+    fetch(`${QUIZZES_URL}/${valueQ}`)
+    .then(resp => resp.json())
+    .then(json => renderHouseResults(json));
   }
 }
 
