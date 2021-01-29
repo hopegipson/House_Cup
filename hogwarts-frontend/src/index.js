@@ -5,6 +5,8 @@ const QUIZZES_URL = `${BASE_URL}/quizzes`
 const main = document.querySelector('main')
 const quizElement = document.getElementById('quiz')
 const resultsContainer = document.getElementById('results')
+//const buttonsContainer = document.getElementById('buttonsContainer')
+
 let currentSlide = 0;
 
 function fetchHouses() {
@@ -13,10 +15,10 @@ function fetchHouses() {
      .then(json => renderHouses(json));
  }
 
- function fetchQuizzes(){
+ function fetchQuizzes(quizName){
      fetch(QUIZZES_URL)
      .then(resp => resp.json())
-     .then(json => renderQuizzes(json));
+     .then(json => renderQuizzes(json, quizName));
  }
 
  function renderHouses(houses) {
@@ -70,9 +72,9 @@ function createHeader(table, columns, array){
     table.appendChild(tr)
   }
 
-function renderQuizzes(quizzes
+function renderQuizzes(quizzes, quizName
     ){  const output = [];
-       quizSelected = quizzes.find(function(e) { return e.name === "Hogwarts Trivia Challenge"})
+       quizSelected = quizzes.find(function(e) { return e.name === quizName})
         selectQuestions = (quizSelected.questions)
         selectQuestions.forEach(
           (currentQuestion, questionIndex) => {
@@ -191,7 +193,6 @@ function showSlide(n, slideholder) {
   nextButton.myParam = slideholder
 
   slideholder[currentSlide].classList.remove('slide-activated');
-  console.log(n)
   slideholder[n].classList.add('slide-activated');
   currentSlide = n;
   if(currentSlide === 0){
@@ -220,8 +221,28 @@ function showPreviousSlide(event) {
   showSlide(currentSlide - 1, slidepassed);
 }
 
+function getNameFromButton(){
+  console.log("this is working")
+}
 
-  //document.addEventListener("DOMContentLoaded", () => {
+function createBasicQuizButtons(){
+  let triviaBtn = document.createElement('button')
+  triviaBtn.setAttribute('quiz_name', "Hogwarts Trivia Challenge"); 
+  //submitBtn.setAttribute('quiz-id' , quizSelected.id); 
+  triviaBtn.innerHTML = "Trivia Challenge"
+  triviaBtn.id = 'trivia'
+  triviaBtn.addEventListener("click", getNameFromButton())
+  const buttonsContainer =  document.getElementById('buttonsContainer');
+  buttonsContainer.append(triviaBtn)
+
+}
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+   
     fetchHouses()
-    fetchQuizzes()
- // });
+    createBasicQuizButtons()
+  // fetchQuizzes("Hogwarts Trivia Challenge")
+ });
+
+ 
