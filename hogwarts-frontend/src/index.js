@@ -184,6 +184,14 @@ function renderResults(quiz){
   });
   const resultsContainer = document.getElementById('results')
   resultsContainer.innerHTML = `${numberCorrect} out of ${quiz.questions.length}`;
+  if (resultsContainer.attributes[1].value === "none"){
+    console.log("no need to save result")
+  }
+  else{
+    //will need to send a patch request to some sort of user patch scores
+
+    console.log(numberCorrect)
+  }
 }
 
 function renderHouseResults(quiz){
@@ -350,18 +358,30 @@ function resetSortingButton(){
 function createBasicQuizButtons(){
   let triviaBtn = document.createElement('button')
   triviaBtn.setAttribute('quiz_name', "Hogwarts Trivia Challenge"); 
+  triviaBtn.classList.add('btn')
+  triviaBtn.classList.add('btn-outline-danger')
   triviaBtn.innerHTML = "Trivia Challenge"
   triviaBtn.id = 'trivia'
   triviaBtn.addEventListener("click", triviaButton)
   let sortingBtn = document.createElement('button')
   sortingBtn.setAttribute('quiz_name', "Hogwarts Sorting Hat"); 
+  sortingBtn.classList.add('btn')
+  sortingBtn.classList.add('btn-outline-danger')
   sortingBtn.innerHTML = "Sorting Hat"
   sortingBtn.id = 'sorting'
   sortingBtn.addEventListener("click", sortingButton)
+ 
   const buttonsContainer =  document.getElementById('buttonsContainer');
+  let divider = document.createElement('div')
+  divider.classList.add('divider')
   buttonsContainer.append(triviaBtn)
+  buttonsContainer.appendChild(divider)
   buttonsContainer.append(sortingBtn)
+  buttonsContainer.appendChild(divider)
+  //buttonsContainer.append(highScoreBtn)
+
 }
+
 
 //RIGHT COLUMN
 
@@ -477,10 +497,24 @@ function transformLoginSpot(userObject){
   formspot.appendChild(div)
 //change something on the page to store userID in the quiz spot
 
+let highScoreBtn = document.createElement('button')
+highScoreBtn.classList.add('btn')
+highScoreBtn.classList.add('btn-outline-info')
+highScoreBtn.innerHTML = "User High Score: "
+highScoreBtn.id = 'high_score'
+const buttonsContainer =  document.getElementById('buttonsContainer');
+buttonsContainer.appendChild(highScoreBtn)
+const resultsContainer = document.getElementById('results')
+resultsContainer.setAttribute('userid', userObject.id)
+
 }
 
 function transFormtoLoggedOut(){
-  
+  //need to reverse this
+  //bring back the form
+  //also need to make it happen so if your patronus is wrong you can't login
+  //resultsContainer.setAttribute('userid', userObject.id)
+
 }
 
 function renderUserOrLogin(){
