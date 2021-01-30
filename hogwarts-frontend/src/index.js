@@ -411,12 +411,12 @@ function lookForUser(users, username, patronus){
 }
 
 function transformLoginSpot(userObject){
-  //const usernameField = document.getElementById('username-field')
-  //const patronusField = document.getElementById('patronus-field')
   const login = document.getElementById('login-form') 
+  const rules = document.getElementById('rules')
   const formspot = document.getElementById('formspot')
   console.log(formspot)
   login.style.display = "none"
+  rules.style.display = "none"
   let div = document.createElement('div')
   div.classList.add('card')
   div.classList.add('mb-3')
@@ -458,22 +458,24 @@ function transformLoginSpot(userObject){
   let li2 = document.createElement('li')
   li2.classList.add('list-group-item')
   li2.innerHTML = `Patronus: ${userObject.patronus}`
+  let li3 = document.createElement('li')
+  li3.classList.add('list-group-item')
+  li3.innerHTML = `Patronus Traits`
+  let li4 = document.createElement('li')
+  li4.classList.add('list-group-item')
+  li4.innerHTML = `Highest Score`
   ul1.appendChild(li1)
   ul1.appendChild(li2)
-
+  ul1.appendChild(li3)
+  ul1.appendChild(li4)
   div3.appendChild(p)
   div3.appendChild(ul1)
-
-
-
-
-
   div.appendChild(h3)
   div.appendChild(div2)
   div.appendChild(image)
   div.appendChild(div3)
   formspot.appendChild(div)
-
+//change something on the page to store userID in the quiz spot
 
 }
 
