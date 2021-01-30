@@ -1,7 +1,15 @@
 
+  document.addEventListener("DOMContentLoaded", () => {
+    transFormtoLoggedOut()
+    fetchHouses()
+    createBasicQuizButtons()
+    renderUserOrLogin()
+ });
+
 const BASE_URL = "http://localhost:3000"
 const HOUSES_URL = `${BASE_URL}/houses`
 const QUIZZES_URL = `${BASE_URL}/quizzes`
+const USERS_URL = `${BASE_URL}/users`
 const main = document.querySelector('main')
 const quizElement = document.getElementById('quiz')
 const resultsContainer = document.getElementById('results')
@@ -10,16 +18,12 @@ const quizContainer = document.getElementById('contain')
 
 let currentSlide = 0;
 
+//LEFT COLUMN
+
 function fetchHouses() {
     fetch(HOUSES_URL)
      .then(resp => resp.json())
      .then(json => renderHouses(json));
- }
-
- function fetchQuizzes(quizName){
-     fetch(QUIZZES_URL)
-     .then(resp => resp.json())
-     .then(json => renderQuizzes(json, quizName));
  }
 
  function renderHouses(houses) {
@@ -72,6 +76,14 @@ function createHeader(table, columns, array){
         tr.appendChild(th)}
     table.appendChild(tr)
   }
+
+  //CENTER COLUMN
+
+  function fetchQuizzes(quizName){
+    fetch(QUIZZES_URL)
+    .then(resp => resp.json())
+    .then(json => renderQuizzes(json, quizName));
+}
 
 function renderQuizzes(quizzes, quizName
     ){  const output = [];
@@ -133,7 +145,6 @@ function renderQuizzes(quizzes, quizName
     let submitBtn = document.createElement('button')
     submitBtn.classList.add('submitQuiz');
     submitBtn.setAttribute('quiz-id' , quizID); 
-    //submitBtn.setAttribute('quiz-id' , quizSelected.id); 
     submitBtn.innerHTML = "Submit Quiz"
     submitBtn.id = 'submit'
     submitBtn.addEventListener("click", resultQuiz)
@@ -199,19 +210,15 @@ function renderHouseResults(quiz){
 
     if(userAnswer === currentQuestion.gryffindor_answer){
       gryffindorCount++;
-      answers[questionIndex].style.color = 'red';
     }
     else if (userAnswer === currentQuestion.slytherin_answer){
       slytherinCount++;
-      answers[questionIndex].style.color = 'green';
     }
     else if (userAnswer === currentQuestion.hufflepuff_answer){
       hufflepuffCount++;
-      answers[questionIndex].style.color = 'yellow';
     }
     else if (userAnswer === currentQuestion.ravenclaw_answer){
       ravenclawCount++;
-      answers[questionIndex].style.color = 'purple';
     }
   });
  let chosenHouse = calculateHouseResults(gryffindorCount, slytherinCount, hufflepuffCount, ravenclawCount)
@@ -354,15 +361,142 @@ function createBasicQuizButtons(){
   const buttonsContainer =  document.getElementById('buttonsContainer');
   buttonsContainer.append(triviaBtn)
   buttonsContainer.append(sortingBtn)
+}
+
+//RIGHT COLUMN
+
+function fetchUsers() {
+  fetch(USERS_URL)
+   .then(resp => resp.json())
+  // .then(json => checkToSeeIfUserExists(json));
+}
+
+
+function createUser(username, patronus) {
+  return fetch(USERS_URL, {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      user_info: {
+        user_username: username,
+        user_patronus: patronus
+      }
+    }
+    )
+  })
+  .then(res => res.json())
+  .then(function(user){
+    //after user is created you'll want to make them current user and add their info to the DOM
+    console.log(user)
+  })
+}
+
+function lookForUser(users, username, patronus){
+  console.log(users)
+  console.log(username)
+  console.log(users[0].username)
+  console.log(users[0].patronus === patronus)
+  console.log(users[0].username === username)
+
+  const selectedObject = users.find( function(s) { return s.username === username })
+  if (selectedObject){
+      transformLoginSpot(selectedObject)
+    //selected object should now be a full JSON object hash
+    //now you can post this user's information you now have to the DOM
+  }
+  else{
+    createUser(username, patronus)
+  }
+  console.log(selectedObject)
+}
+
+function transformLoginSpot(userObject){
+  //const usernameField = document.getElementById('username-field')
+  //const patronusField = document.getElementById('patronus-field')
+  const login = document.getElementById('login-form') 
+  const formspot = document.getElementById('formspot')
+  console.log(formspot)
+  login.style.display = "none"
+  let div = document.createElement('div')
+  div.classList.add('card')
+  div.classList.add('mb-3')
+  let h3 = document.createElement('h3')
+  h3.classList.add('card-header')
+  h3.innerHTML = `Welcome back ${userObject.username}`
+
+  let div2 = document.createElement('div')
+  div2.classList.add('card-body')
+  let h5 = document.createElement('h5')
+  h5.classList.add('card-title')
+  h5.innerHTML = `${userObject.house_points} points earned for the House Cup.`
+  let h6 = document.createElement('h6')
+  h6.classList.add('card-subtitle')
+//  if (userObject.house){
+ h6.innerHTML = `${userObject.house.name}`
+ h6.style.color = userObject.house.primary_color
+ // }
+  //else{ h6.innerHTML = "Not sorted into a house yet"}
+  div2.appendChild(h5)
+  div2.appendChild(h6)
+
+  let image = document.createElement('img')
+  image.setAttribute('width', '350px')
+  image.setAttribute('fill', '#868e96')
+  image.src = 'https://img2.cgtrader.com/items/2228955/0404dd9a15/hogwarts-crest-3d-model-obj-3ds-fbx-c4d-stl.jpg'
+
+  let div3 = document.createElement('div')
+  div3.classList.add('card-body')
+  let p = document.createElement('p')
+  p.classList.add('card-text')
+  p.innerHTML = "Will be where small house summary will go"
+  let ul1 = document.createElement('ul')
+  ul1.classList.add('list-group')
+  ul1.classList.add('list-group-flush')
+  let li1 = document.createElement('li')
+  li1.classList.add('list-group-item')
+  li1.innerHTML = `House Traits: ${userObject.house.traits} `
+  let li2 = document.createElement('li')
+  li2.classList.add('list-group-item')
+  li2.innerHTML = `Patronus: ${userObject.patronus}`
+  ul1.appendChild(li1)
+  ul1.appendChild(li2)
+
+  div3.appendChild(p)
+  div3.appendChild(ul1)
+
+
+
+
+
+  div.appendChild(h3)
+  div.appendChild(div2)
+  div.appendChild(image)
+  div.appendChild(div3)
+  formspot.appendChild(div)
 
 
 }
 
+function transFormtoLoggedOut(){
+  
+}
 
-  document.addEventListener("DOMContentLoaded", () => {
-    fetchHouses()
-    createBasicQuizButtons()
-  // fetchQuizzes("Hogwarts Trivia Challenge")
- });
+function renderUserOrLogin(){
+  const login = document.getElementById('login-form')
+  const usernameField = document.getElementById('username-field')
+  const patronusField = document.getElementById('patronus-field')
+  login.addEventListener("submit", function(event){
+    function checkToSeeIfUserExists(){
+      let userUsername = usernameField.value
+      let userPatronus = patronusField.value
+      fetch(USERS_URL)
+     .then(resp => resp.json())
+     .then(json => lookForUser(json, userUsername, userPatronus)
+     )
+  }    
+  event.preventDefault()
+  checkToSeeIfUserExists()
+  })
+}
 
- 
+
