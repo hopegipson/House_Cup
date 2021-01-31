@@ -1,22 +1,23 @@
 
   document.addEventListener("DOMContentLoaded", () => {
-    transFormtoLoggedOut()
-    fetchHouses()
-    createBasicQuizButtons()
-    renderUserOrLogin()
- });
 
 const BASE_URL = "http://localhost:3000"
 const HOUSES_URL = `${BASE_URL}/houses`
 const QUIZZES_URL = `${BASE_URL}/quizzes`
 const USERS_URL = `${BASE_URL}/users`
-const main = document.querySelector('main')
-const quizElement = document.getElementById('quiz')
-const resultsContainer = document.getElementById('results')
+const left = document.getElementsByClassName('left')[0]
+const buttonsContainer = document.getElementById('buttonsContainer')
+const login = document.getElementById('login-form')
+const usernameField = document.getElementById('username-field')
+const patronusField = document.getElementById('patronus-field')
 const quizContainer = document.getElementById('contain')
-//const buttonsContainer = document.getElementById('buttonsContainer')
 
 let currentSlide = 0;
+
+transFormtoLoggedOut()
+fetchHouses()
+createBasicQuizButtons()
+renderUserOrLogin()
 
 //LEFT COLUMN
 
@@ -27,8 +28,6 @@ function fetchHouses() {
  }
 
  function renderHouses(houses) {
-    const left = document.getElementsByClassName('left')[0]
-
     houses.forEach(house => {
       let div = document.createElement('div')
      div.classList.add('card');
@@ -89,10 +88,8 @@ function renderQuizzes(quizzes, quizName
     ){  const output = [];
        quizSelected = quizzes.find(function(e) { return e.name === quizName})
         selectQuestions = (quizSelected.questions)
-        selectQuestions.forEach(
-          (currentQuestion, questionIndex) => {
+        selectQuestions.forEach((currentQuestion, questionIndex) => {
            let answers = document.createElement('div')
-           
            answers.classList.add('answers');
            let questions = document.createElement('div')
            questions.classList.add('questions');
@@ -107,28 +104,22 @@ function renderQuizzes(quizzes, quizName
               answers.appendChild(label)
               answers.appendChild(document.createElement("br"));
 
+
             }
+
           questions.innerHTML = `${currentQuestion.question}`
-          
-          const quizElement = document.getElementById('quiz');
+          let quizElement = document.getElementById('quiz');
           let slide = document.createElement('div')
           slide.classList.add('slide');
-
           slide.appendChild(questions)
           slide.appendChild(answers)
           quizElement.append(slide)
           })
 
         
-          let quizElement = document.getElementById('quiz');
           createButtons(quizSelected.id)
-          
           const slides = document.querySelectorAll(".slide");
-
-          //showSlide(currentSlide, slides);
           showSlide(0, slides);
-
-      
       } 
       
   function createButtons(quizID){
@@ -148,7 +139,6 @@ function renderQuizzes(quizzes, quizName
     submitBtn.innerHTML = "Submit Quiz"
     submitBtn.id = 'submit'
     submitBtn.addEventListener("click", resultQuiz)
-    const quizContainer = document.getElementById('contain')
     quizContainer.append(prevBtn)
     quizContainer.append(nextBtn)
     quizContainer.append(submitBtn)
@@ -370,16 +360,11 @@ function createBasicQuizButtons(){
   sortingBtn.innerHTML = "Sorting Hat"
   sortingBtn.id = 'sorting'
   sortingBtn.addEventListener("click", sortingButton)
- 
-  const buttonsContainer =  document.getElementById('buttonsContainer');
   let divider = document.createElement('div')
   divider.classList.add('divider')
   buttonsContainer.append(triviaBtn)
-  buttonsContainer.appendChild(divider)
   buttonsContainer.append(sortingBtn)
   buttonsContainer.appendChild(divider)
-  //buttonsContainer.append(highScoreBtn)
-
 }
 
 
@@ -406,8 +391,10 @@ function createUser(username, patronus) {
   })
   .then(res => res.json())
   .then(function(user){
-    //after user is created you'll want to make them current user and add their info to the DOM
     console.log(user)
+    transformLoginSpot(user)
+
+    //after user is created you'll want to make them current user and add their info to the DOM
   })
 }
 
@@ -421,8 +408,6 @@ function lookForUser(users, username, patronus){
   const selectedObject = users.find( function(s) { return s.username === username })
   if (selectedObject){
       transformLoginSpot(selectedObject)
-    //selected object should now be a full JSON object hash
-    //now you can post this user's information you now have to the DOM
   }
   else{
     createUser(username, patronus)
@@ -462,31 +447,39 @@ function transformLoginSpot(userObject){
   let image = document.createElement('img')
   image.setAttribute('width', '350px')
   image.setAttribute('fill', '#868e96')
-  image.src = 'https://img2.cgtrader.com/items/2228955/0404dd9a15/hogwarts-crest-3d-model-obj-3ds-fbx-c4d-stl.jpg'
-
+  if (userObject.house){
+    image.src= `${userObject.house.image}`
+  }
+  else{
+    image.src = 'https://img2.cgtrader.com/items/2228955/0404dd9a15/hogwarts-crest-3d-model-obj-3ds-fbx-c4d-stl.jpg'
+  }
   let div3 = document.createElement('div')
   div3.classList.add('card-body')
   let p = document.createElement('p')
   p.classList.add('card-text')
-  p.innerHTML = "Will be where small house summary will go"
+  if (userObject.house){
+ // p.innerHTML = `${userObject.house.small_summary}`
+  }
+  else{
+    p.innerHTML = `To earn points, use the sorting quiz to be assigned a Hogwarts house.`
+  }
   let ul1 = document.createElement('ul')
   ul1.classList.add('list-group')
   ul1.classList.add('list-group-flush')
+  if (userObject.house){
   let li1 = document.createElement('li')
   li1.classList.add('list-group-item')
   li1.innerHTML = `House Traits: ${userObject.house.traits} `
+  ul1.appendChild(li1)
+  }
   let li2 = document.createElement('li')
   li2.classList.add('list-group-item')
   li2.innerHTML = `Patronus: ${userObject.patronus}`
-  let li3 = document.createElement('li')
-  li3.classList.add('list-group-item')
-  li3.innerHTML = `Patronus Traits`
+
   let li4 = document.createElement('li')
   li4.classList.add('list-group-item')
-  li4.innerHTML = `Highest Score`
-  ul1.appendChild(li1)
+  li4.innerHTML = `Highest Score: ${userObject.highest_score}`
   ul1.appendChild(li2)
-  ul1.appendChild(li3)
   ul1.appendChild(li4)
   div3.appendChild(p)
   div3.appendChild(ul1)
@@ -518,9 +511,6 @@ function transFormtoLoggedOut(){
 }
 
 function renderUserOrLogin(){
-  const login = document.getElementById('login-form')
-  const usernameField = document.getElementById('username-field')
-  const patronusField = document.getElementById('patronus-field')
   login.addEventListener("submit", function(event){
     function checkToSeeIfUserExists(){
       let userUsername = usernameField.value
@@ -535,4 +525,5 @@ function renderUserOrLogin(){
   })
 }
 
+});
 

@@ -9,6 +9,7 @@ class CreateHouses < ActiveRecord::Migration[6.0]
       t.string :mascot
       t.string :element
       t.text :house_information
+      t.string :small_summary
       t.string :traits
 
       t.integer :points, default: 0

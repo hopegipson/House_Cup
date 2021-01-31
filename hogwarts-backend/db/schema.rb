@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 4) do
     t.string "mascot"
     t.string "element"
     t.text "house_information"
+    t.string "small_summary"
     t.string "traits"
     t.integer "points", default: 0
     t.datetime "created_at", precision: 6, null: false
@@ -53,9 +54,10 @@ ActiveRecord::Schema.define(version: 4) do
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "patronus"
-    t.bigint "house_id", null: false
+    t.bigint "house_id", default: 0, null: false
     t.text "scores"
-    t.integer "house_points"
+    t.integer "highest_score", default: 0
+    t.integer "house_points", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["house_id"], name: "index_users_on_house_id"
