@@ -28,6 +28,7 @@ function fetchHouses() {
  }
 
  function renderHouses(houses) {
+   houses1 = houses.shift()
     houses.forEach(house => {
       let div = document.createElement('div')
      div.classList.add('card');
@@ -163,7 +164,6 @@ function renderResults(quiz){
         answerI.children[i].children[0].disabled = true
       }
     }
-
     if(userAnswer === currentQuestion.correct_answer){
       numberCorrect++;
       answers[questionIndex].style.color = 'lightgreen';
@@ -174,15 +174,27 @@ function renderResults(quiz){
   });
   const resultsContainer = document.getElementById('results')
   resultsContainer.innerHTML = `${numberCorrect} out of ${quiz.questions.length}`;
-  if (resultsContainer.attributes[1].value === "none"){
+  if (resultsContainer.attributes[1].value === "none" || resultsContainer.attributes[1].value === 1){
     console.log("no need to save result")
   }
   else{
    let userNumber = resultsContainer.attributes[1].value
    addScoreToUser(userNumber, numberCorrect)
-
-    //console.log(numberCorrect)
+   updateDomWithResults(userNumber)
   }
+}
+
+function updateDomWithResults(user){
+  fetch(`${USERS_URL}/${user}`)
+  .then(resp => resp.json())
+  .then(function(userObject) {
+  let highScoreButton = document.getElementById('high_score')
+  highScoreButton.innerHTML = `User High Score: ${userObject.highest_score}`
+  let pointsUserCard = document.getElementById('pointsUserCard')
+  pointsUserCard.innerHTML = `${userObject.house_points} points earned for the House Cup.`
+  let listItemHighScore = document.getElementById('listItemHighScore')
+  listItemHighScore.innerHTML = `Highest Score: ${userObject.highest_score}`
+  })
 }
 
 
@@ -237,35 +249,76 @@ function renderHouseResults(quiz){
     }
   });
  let chosenHouse = calculateHouseResults(gryffindorCount, slytherinCount, hufflepuffCount, ravenclawCount)
- console.log(chosenHouse)
-  const resultsContainer = document.getElementById('results')
-  resultsContainer.innerHTML = `${chosenHouse} is your new House! Should show gryffindor.someinformation about it`;
+ let resultsContainer = document.getElementById('results')
+ let userid = resultsContainer.attributes[1].value
+
+    if (resultsContainer.attributes[1].value === "none"){
+      console.log("no need to save result")
+    }
+    else{
+      addHouseToUser(userid, chosenHouse)
+      //tomorrowyou need to figure out when to append the DOM
+    }
+
+  //resultsContainer.innerHTML = `${chosenHouse} is your new House! ${chosenHouse.house_information}`;
 }
+
+function addHouseToUser(user, house){
+   fetch(`${USERS_URL}/${user}`, {
+    method: 'PATCH',
+   headers: {'Content-Type': 'application/json',
+      'Accepts': 'application/json'},
+    body: JSON.stringify({
+      user_info_score: {
+   house_name: house
+    }
+  })
+})
+  //let resultsContainer = document.getElementById('results')
+  //let userid = resultsContainer.attributes[1].value
+   appendDOMWithChosenHouse()
+
+  }
+
+  function appendDOMWithChosenHouse(){
+    let resultsContainer = document.getElementById('results')
+    let userObject = resultsContainer.attributes[1].value
+    fetch(`${USERS_URL}/${userObject}`)
+    .then(resp => resp.json())
+    .then(function(userObject) {
+      console.log(userObject)
+    let resultsContainer = document.getElementById('results')
+    resultsContainer.innerHTML = `${userObject.house.name} is your new House! ${userObject.house.house_information}`;
+    let cardHouseName = document.getElementById('cardHouseName')
+    cardHouseName.innerHTML = `${userObject.house.name}`
+    cardHouseName.color = userObject.house.primary_color
+
+  }) 
+  }
 
 function calculateHouseResults(gryffindor, slytherin, hufflepuff, ravenclaw){
- largestNumber = Math.max(gryffindor, slytherin, hufflepuff, ravenclaw)
- let house = []
- if (gryffindor == largestNumber){ house.push("Gryffindor")}
- else if (slytherin == largestNumber){ house.push("Slytherin")}
- else if (ravenclaw == largestNumber){ house.push("Ravenclaw")}
- else if (hufflepuff == largestNumber){ house.push("Hufflepuff")}
+  largestNumber = Math.max(gryffindor, slytherin, hufflepuff, ravenclaw)
+  let house = []
+  if (gryffindor == largestNumber){ house.push("Gryffindor")}
+  if (slytherin == largestNumber){ house.push("Slytherin")}
+  if (ravenclaw == largestNumber){ house.push("Ravenclaw")}
+  if (hufflepuff == largestNumber){ house.push("Hufflepuff")}
+  console.log(house)
+  if (house.length === 1){
+    return house[0]
+  }
+  else {
+    return house[Math.floor(Math.random()*house.length)]
+  }
+  }
 
- if (house.length == 1){
-   return house[0]
- }
- else if(house.length == 2){
-   console.log("tiebreaker not yet created")
- }
 
 
-
- console.log(largestNumber)
-}
 
 
 
 function resultQuiz(event) {
-  console.log(event.target.attributes)
+  console.log(event.target.attributes[1])
   let valueQ = event.target.attributes[1].value
   if (valueQ == 1){
   fetch(`${QUIZZES_URL}/${valueQ}`)
@@ -387,13 +440,6 @@ function createBasicQuizButtons(){
 
 //RIGHT COLUMN
 
-function fetchUsers() {
-  fetch(USERS_URL)
-   .then(resp => resp.json())
-  // .then(json => checkToSeeIfUserExists(json));
-}
-
-
 function createUser(username, patronus) {
   return fetch(USERS_URL, {
     method: 'POST',
@@ -411,14 +457,12 @@ function createUser(username, patronus) {
     console.log(user)
     transformLoginSpot(user)
   })
+  .catch(function(error) {
+    console.log(error)
+})
 }
 
 function lookForUser(users, username, patronus){
-  console.log(users)
-  console.log(username)
-  console.log(users[0].username)
-  console.log(users[0].patronus === patronus)
-  console.log(users[0].username === username)
   let selectedUsers = []
   users.map(function(user){
     if (user.username === username){selectedUsers.push(user)} 
@@ -459,44 +503,36 @@ function transformLoginSpot(userObject){
   div2.classList.add('card-body')
   let h5 = document.createElement('h5')
   h5.classList.add('card-title')
+  h5.setAttribute('id', 'pointsUserCard')
   h5.innerHTML = `${userObject.house_points} points earned for the House Cup.`
   let h6 = document.createElement('h6')
   h6.classList.add('card-subtitle')
-  if (userObject.house){
+  h6.setAttribute('id', 'cardHouseName')
   h6.innerHTML = `${userObject.house.name}`
   h6.style.color = userObject.house.primary_color
-  }
-  else{ h6.innerHTML = "Not sorted into a house yet"}
   div2.appendChild(h5)
   div2.appendChild(h6)
 
   let image = document.createElement('img')
   image.setAttribute('width', '350px')
   image.setAttribute('fill', '#868e96')
-  if (userObject.house){
-    image.src= `${userObject.house.image}`
-  }
-  else{
-    image.src = 'https://img2.cgtrader.com/items/2228955/0404dd9a15/hogwarts-crest-3d-model-obj-3ds-fbx-c4d-stl.jpg'
-  }
+  image.setAttribute('id', 'houseImage')
+  image.src= `${userObject.house.image}`
+ 
   let div3 = document.createElement('div')
   div3.classList.add('card-body')
   
   let p = document.createElement('p')
   p.classList.add('card-text')
   p.classList.add('styledp')
-  if (userObject.house){
   p.innerHTML = `${userObject.house.small_summary}`
-  }
-  else{
-    p.innerHTML = `To earn points, use the sorting quiz to be assigned a Hogwarts house.`
-  }
+ 
  
 
   let ul1 = document.createElement('ul')
   ul1.classList.add('list-group')
   ul1.classList.add('list-group-flush')
-  if (userObject.house){
+  if (userObject.house != 1){
   let li1 = document.createElement('li')
   li1.classList.add('list-group-item')
   li1.innerHTML = `House Traits: ${userObject.house.traits} `
@@ -516,6 +552,7 @@ function transformLoginSpot(userObject){
 
   let li5 = document.createElement('li')
   li5.classList.add('list-group-item')
+  li5.setAttribute('id', 'listItemHighScore')
   li5.innerHTML = `Highest Score: ${userObject.highest_score}`
   ul1.appendChild(li4)
   ul1.appendChild(li5)
@@ -544,7 +581,7 @@ function transFormtoLoggedOut(){
   //need to reverse this
   //bring back the form
   //also need to make it happen so if your patronus is wrong you can't login
-  //resultsContainer.setAttribute('userid', userObject.id)  
+  //resultsContainer.setAttribute('userid', userObject.id)  set to 1
 
 }
 
