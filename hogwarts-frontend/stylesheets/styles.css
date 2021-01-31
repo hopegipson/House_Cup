@@ -165,6 +165,10 @@ p {
   font-family: 'HarryFont';
 
 }
+.styledp
+{
+  width: 300px;
+}
 
 abbr[title],
 abbr[data-original-title] {

@@ -178,11 +178,28 @@ function renderResults(quiz){
     console.log("no need to save result")
   }
   else{
-    //will need to send a patch request to some sort of user patch scores
+   let userNumber = resultsContainer.attributes[1].value
+   addScoreToUser(userNumber, numberCorrect)
 
-    console.log(numberCorrect)
+    //console.log(numberCorrect)
   }
 }
+
+
+
+function addScoreToUser(user, score){
+  fetch(`${USERS_URL}/${user}`, {
+    method: 'PATCH',
+   headers: {'Content-Type': 'application/json',
+      'Accepts': 'application/json'},
+    body: JSON.stringify({user_info_score: {
+   scores: score
+    }
+  })
+  })
+  }
+
+
 
 function renderHouseResults(quiz){
   const quizElement = document.getElementById('quiz');
@@ -393,8 +410,6 @@ function createUser(username, patronus) {
   .then(function(user){
     console.log(user)
     transformLoginSpot(user)
-
-    //after user is created you'll want to make them current user and add their info to the DOM
   })
 }
 
@@ -404,15 +419,26 @@ function lookForUser(users, username, patronus){
   console.log(users[0].username)
   console.log(users[0].patronus === patronus)
   console.log(users[0].username === username)
+  let selectedUsers = []
+  users.map(function(user){
+    if (user.username === username){selectedUsers.push(user)} 
+  })
 
-  const selectedObject = users.find( function(s) { return s.username === username })
-  if (selectedObject){
-      transformLoginSpot(selectedObject)
-  }
-  else{
+  if (selectedUsers.length === 0){
     createUser(username, patronus)
   }
-  console.log(selectedObject)
+  else{
+   let selectedObject = selectedUsers.find(function(s){return s.patronus === patronus})
+      if (selectedObject){
+        transformLoginSpot(selectedObject)
+      }
+      else{
+        let errors = document.getElementById('errors')
+        errors.innerHTML = "Your patronus is incorrect. Make a new user with a new username or verify patronus."
+        errors.style.color = 'red'
+
+      }
+  }
 }
 
 function transformLoginSpot(userObject){
@@ -436,11 +462,11 @@ function transformLoginSpot(userObject){
   h5.innerHTML = `${userObject.house_points} points earned for the House Cup.`
   let h6 = document.createElement('h6')
   h6.classList.add('card-subtitle')
-//  if (userObject.house){
- h6.innerHTML = `${userObject.house.name}`
- h6.style.color = userObject.house.primary_color
- // }
-  //else{ h6.innerHTML = "Not sorted into a house yet"}
+  if (userObject.house){
+  h6.innerHTML = `${userObject.house.name}`
+  h6.style.color = userObject.house.primary_color
+  }
+  else{ h6.innerHTML = "Not sorted into a house yet"}
   div2.appendChild(h5)
   div2.appendChild(h6)
 
@@ -455,14 +481,18 @@ function transformLoginSpot(userObject){
   }
   let div3 = document.createElement('div')
   div3.classList.add('card-body')
+  
   let p = document.createElement('p')
   p.classList.add('card-text')
+  p.classList.add('styledp')
   if (userObject.house){
- // p.innerHTML = `${userObject.house.small_summary}`
+  p.innerHTML = `${userObject.house.small_summary}`
   }
   else{
     p.innerHTML = `To earn points, use the sorting quiz to be assigned a Hogwarts house.`
   }
+ 
+
   let ul1 = document.createElement('ul')
   ul1.classList.add('list-group')
   ul1.classList.add('list-group-flush')
@@ -471,16 +501,24 @@ function transformLoginSpot(userObject){
   li1.classList.add('list-group-item')
   li1.innerHTML = `House Traits: ${userObject.house.traits} `
   ul1.appendChild(li1)
-  }
   let li2 = document.createElement('li')
   li2.classList.add('list-group-item')
-  li2.innerHTML = `Patronus: ${userObject.patronus}`
-
+  li2.innerHTML = `Mascot: ${userObject.house.mascot} `
+  ul1.appendChild(li2)
+  let li3 = document.createElement('li')
+  li3.classList.add('list-group-item')
+  li3.innerHTML = `Element: ${userObject.house.element} `
+  ul1.appendChild(li3)
+  }
   let li4 = document.createElement('li')
   li4.classList.add('list-group-item')
-  li4.innerHTML = `Highest Score: ${userObject.highest_score}`
-  ul1.appendChild(li2)
+  li4.innerHTML = `Patronus: ${userObject.patronus}`
+
+  let li5 = document.createElement('li')
+  li5.classList.add('list-group-item')
+  li5.innerHTML = `Highest Score: ${userObject.highest_score}`
   ul1.appendChild(li4)
+  ul1.appendChild(li5)
   div3.appendChild(p)
   div3.appendChild(ul1)
   div.appendChild(h3)
@@ -493,7 +531,7 @@ function transformLoginSpot(userObject){
 let highScoreBtn = document.createElement('button')
 highScoreBtn.classList.add('btn')
 highScoreBtn.classList.add('btn-outline-info')
-highScoreBtn.innerHTML = "User High Score: "
+highScoreBtn.innerHTML = `User High Score: ${userObject.highest_score} `
 highScoreBtn.id = 'high_score'
 const buttonsContainer =  document.getElementById('buttonsContainer');
 buttonsContainer.appendChild(highScoreBtn)
@@ -506,7 +544,7 @@ function transFormtoLoggedOut(){
   //need to reverse this
   //bring back the form
   //also need to make it happen so if your patronus is wrong you can't login
-  //resultsContainer.setAttribute('userid', userObject.id)
+  //resultsContainer.setAttribute('userid', userObject.id)  
 
 }
 
