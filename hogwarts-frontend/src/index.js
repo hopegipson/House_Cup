@@ -22,60 +22,62 @@ renderUserOrLogin()
 //LEFT COLUMN
 
 function fetchHouses() {
-    fetch(HOUSES_URL)
-     .then(resp => resp.json())
-     .then(json => renderHouses(json));
- }
+  fetch(HOUSES_URL)
+   .then(resp => resp.json())
+   .then(json => renderHouses(json));
+}
 
- function renderHouses(houses) {
-   houses1 = houses.shift()
-    houses.forEach(house => {
-      let div = document.createElement('div')
-     div.classList.add('card');
-     div.style.backgroundImage= `url(${house.image})`
-     div.style.borderColor = "black"
-     let p = document.createElement('p')
-     p.innerHTML = house.name
-     p.setAttribute('house-id' , house.id); 
-     let table = document.createElement('table')
-     table.classList.add("table-hover")
+function renderHouses(houses) {
+ houses1 = houses.shift()
+  houses.forEach(house => {
+    let div = document.createElement('div')
+   div.classList.add('card');
+   div.style.backgroundImage= `url(${house.image})`
+   div.style.borderColor = "black"
+   let p = document.createElement('p')
+   p.innerHTML = house.name
+   p.setAttribute('house-id' , house.id); 
+   let table = document.createElement('table')
+   table.classList.add("table-hover")
 
-     houseUser = house.users  
-     let headersArray = ["User", "Poinst Scored For House"]
-    createHeader(table, 2, headersArray)
-     for (user of houseUser) {
-        let tr = document.createElement('tr')
-         let th = document.createElement('th')
-         th.scope= ('col')
-         th.innerHTML = user.username
-         let th2 = document.createElement('th')
-         th2.scope= ('col')
-         th2.innerHTML = "points"
-         tr.appendChild(th)
-         tr.appendChild(th2)
-         let th3 = document.createElement('th')
-         th3.scope= ('col')
-         tr.appendChild(th3)
+   houseUser = house.users  
+   let headersArray = ["User", "Poinst Scored For House"]
+  createHeader(table, 2, headersArray)
+   for (user of houseUser) {
+      let tr = document.createElement('tr')
+       let th = document.createElement('th')
+       th.scope= ('col')
+       th.innerHTML = user.username
+       let th2 = document.createElement('th')
+       th2.scope= ('col')
+       th2.innerHTML = "points"
+       tr.appendChild(th)
+       tr.appendChild(th2)
+       let th3 = document.createElement('th')
+       th3.scope= ('col')
+       tr.appendChild(th3)
 
-        table.appendChild(tr)
-     }    
+      table.appendChild(tr)
+   }    
 
 
-    div.appendChild(p)
-     div.appendChild(table)
-    left.appendChild(div)
-    })
-  }
+  div.appendChild(p)
+   div.appendChild(table)
+  left.appendChild(div)
+  })
+}
 
 function createHeader(table, columns, array){
-    let tr = document.createElement('tr')
-    for (var i = 0; i < columns; i++){
-        let th = document.createElement('th')
-        th.scope= ('col')
-        th.innerHTML = array[i]
-        tr.appendChild(th)}
-    table.appendChild(tr)
-  }
+  let tr = document.createElement('tr')
+  for (var i = 0; i < columns; i++){
+      let th = document.createElement('th')
+      th.scope= ('col')
+      th.innerHTML = array[i]
+      tr.appendChild(th)}
+  table.appendChild(tr)
+}
+
+
 
   //CENTER COLUMN
 
@@ -104,10 +106,7 @@ function renderQuizzes(quizzes, quizName
               label.innerHTML += `${letter}: ${currentQuestion.answers[letter]}`
               answers.appendChild(label)
               answers.appendChild(document.createElement("br"));
-
-
             }
-
           questions.innerHTML = `${currentQuestion.question}`
           let quizElement = document.getElementById('quiz');
           let slide = document.createElement('div')
@@ -116,8 +115,6 @@ function renderQuizzes(quizzes, quizName
           slide.appendChild(answers)
           quizElement.append(slide)
           })
-
-        
           createButtons(quizSelected.id)
           const slides = document.querySelectorAll(".slide");
           showSlide(0, slides);
@@ -180,21 +177,17 @@ function renderResults(quiz){
   else{
    let userNumber = resultsContainer.attributes[1].value
    addScoreToUser(userNumber, numberCorrect)
-   updateDomWithResults(userNumber)
   }
 }
 
-function updateDomWithResults(user){
-  fetch(`${USERS_URL}/${user}`)
-  .then(resp => resp.json())
-  .then(function(userObject) {
+function updateDomWithResults(userObject){
   let highScoreButton = document.getElementById('high_score')
   highScoreButton.innerHTML = `User High Score: ${userObject.highest_score}`
   let pointsUserCard = document.getElementById('pointsUserCard')
   pointsUserCard.innerHTML = `${userObject.house_points} points earned for the House Cup.`
   let listItemHighScore = document.getElementById('listItemHighScore')
   listItemHighScore.innerHTML = `Highest Score: ${userObject.highest_score}`
-  })
+  
 }
 
 
@@ -209,6 +202,11 @@ function addScoreToUser(user, score){
     }
   })
   })
+  .then(res => res.json())
+  .then(function(user){
+  updateDomWithResults(user)  
+})
+
   }
 
 
@@ -256,15 +254,14 @@ function renderHouseResults(quiz){
       console.log("no need to save result")
     }
     else{
-      addHouseToUser(userid, chosenHouse)
-      //tomorrowyou need to figure out when to append the DOM
+   addHouseToUser(userid, chosenHouse)
     }
 
   //resultsContainer.innerHTML = `${chosenHouse} is your new House! ${chosenHouse.house_information}`;
 }
 
 function addHouseToUser(user, house){
-   fetch(`${USERS_URL}/${user}`, {
+  return fetch(`${USERS_URL}/${user}`, {
     method: 'PATCH',
    headers: {'Content-Type': 'application/json',
       'Accepts': 'application/json'},
@@ -274,26 +271,25 @@ function addHouseToUser(user, house){
     }
   })
 })
+.then(res => res.json())
+.then(function(user){
+  appendDOMWithChosenHouse(user)  
+})
+
   //let resultsContainer = document.getElementById('results')
   //let userid = resultsContainer.attributes[1].value
-   appendDOMWithChosenHouse()
 
-  }
+}
 
-  function appendDOMWithChosenHouse(){
-    let resultsContainer = document.getElementById('results')
-    let userObject = resultsContainer.attributes[1].value
-    fetch(`${USERS_URL}/${userObject}`)
-    .then(resp => resp.json())
-    .then(function(userObject) {
-      console.log(userObject)
+  function appendDOMWithChosenHouse(userObject){
+  
+  
     let resultsContainer = document.getElementById('results')
     resultsContainer.innerHTML = `${userObject.house.name} is your new House! ${userObject.house.house_information}`;
     let cardHouseName = document.getElementById('cardHouseName')
     cardHouseName.innerHTML = `${userObject.house.name}`
     cardHouseName.color = userObject.house.primary_color
-
-  }) 
+  
   }
 
 function calculateHouseResults(gryffindor, slytherin, hufflepuff, ravenclaw){

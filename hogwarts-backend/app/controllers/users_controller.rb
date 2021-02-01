@@ -26,6 +26,7 @@ class UsersController < ApplicationController
           user.house = House.find_by(name: user_params_score[:house_name])
         end
         user.save
+        render json: UserSerializer.new(user).to_serialized_json
       end
 
       private
