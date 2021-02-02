@@ -90,31 +90,7 @@ function createHeader(table, columns, array){
 function renderQuizzes(quizzes, quizName
     ){  const output = [];
        quizSelected = quizzes.find(function(e) { return e.name === quizName})
-        selectQuestions = (quizSelected.questions)
-        selectQuestions.forEach((currentQuestion, questionIndex) => {
-           let answers = document.createElement('div')
-           answers.classList.add('answers');
-           let questions = document.createElement('div')
-           questions.classList.add('questions');
-            for(letter in currentQuestion.answers){
-              let label = document.createElement('label')
-              let input = document.createElement('input')
-              input.setAttribute('type', 'radio')
-              input.setAttribute('name', `question${questionIndex}`)
-              input.setAttribute('value', `${letter}`)
-              label.appendChild(input)
-              label.innerHTML += `${letter}: ${currentQuestion.answers[letter]}`
-              answers.appendChild(label)
-              answers.appendChild(document.createElement("br"));
-            }
-          questions.innerHTML = `${currentQuestion.question}`
-          let quizElement = document.getElementById('quiz');
-          let slide = document.createElement('div')
-          slide.classList.add('slide');
-          slide.appendChild(questions)
-          slide.appendChild(answers)
-          quizElement.append(slide)
-          })
+       new Quiz(quizSelected)
           createButtons(quizSelected.id)
           const slides = document.querySelectorAll(".slide");
           showSlide(0, slides);
@@ -145,7 +121,6 @@ function renderQuizzes(quizzes, quizName
 
 
 function renderResults(quiz){
-  const quizElement = document.getElementById('quiz');
   const answers = document.getElementsByClassName('answers')
   let numberCorrect = 0;
   quiz.questions.forEach( (currentQuestion, questionIndex) => {
@@ -486,7 +461,7 @@ function transformLoginSpot(userObject){
   const rules = document.getElementById('rules')
   const formspot = document.getElementById('formspot')
   console.log(formspot)
-  login.style.display = "none"
+  login.style.display = "none" 
   rules.style.display = "none"
   let div = document.createElement('div')
   div.classList.add('card')
@@ -523,8 +498,6 @@ function transformLoginSpot(userObject){
   p.classList.add('styledp')
   p.innerHTML = `${userObject.house.small_summary}`
  
- 
-
   let ul1 = document.createElement('ul')
   ul1.classList.add('list-group')
   ul1.classList.add('list-group-flush')
@@ -559,8 +532,7 @@ function transformLoginSpot(userObject){
   div.appendChild(image)
   div.appendChild(div3)
   formspot.appendChild(div)
-//change something on the page to store userID in the quiz spot
-
+  
 let highScoreBtn = document.createElement('button')
 highScoreBtn.classList.add('btn')
 highScoreBtn.classList.add('btn-outline-info')
