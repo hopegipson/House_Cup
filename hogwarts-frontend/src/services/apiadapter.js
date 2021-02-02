@@ -28,4 +28,23 @@ class APIAdapter {
     
     getUsers = () => fetch(this.usersURL).then(this.parseJSON)
     getUser = (userID) => fetch(this.usersURL + `/${userID}`).then(this.parseJSON)
+
+    patchUserScore = (id, score) => fetch(this.usersURL + `/${user}`, {
+        method: 'PATCH',
+       headers: this.headers,
+        body: JSON.stringify({user_info_score: {
+       scores: score}
+      })
+      })
+      .then(this.parseJSON)
+
+      patchUserHouse = (id, house) => fetch(this.usersURL + `/${user}`, {
+        method: 'PATCH',
+       headers: this.headers,
+        body: JSON.stringify({user_info_score: {
+       house_name: house}
+      })
+      })
+      .then(this.parseJSON)
+
 }

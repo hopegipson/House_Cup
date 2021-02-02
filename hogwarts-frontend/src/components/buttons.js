@@ -32,7 +32,7 @@ class GameButtons {
   }
   
   sortingButton = (event) =>{
-    let quizNamed = event.target.attributes.quiz_name.value
+    let quizNamed = event.target.attributes.quiz_id.value
     this.resetQuizSpace()
     this.renderQuiz(quizNamed)
     let selectedSort = document.getElementById("sorting");
@@ -50,7 +50,6 @@ class GameButtons {
     divquiz.setAttribute('id', 'quiz')
     divone.appendChild(divquiz)
     quizContainer.appendChild(divone)
-    console.log(quizContainer)
   }
 
   resetTriviaButton =() =>{
@@ -64,13 +63,6 @@ class GameButtons {
     renderQuiz(quizName){  
       api.getQuiz(quizName).then(function(quiz){new Quiz(quiz)})
       }     
-
-
-
-
-
-
-
 
 }
 
