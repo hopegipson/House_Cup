@@ -1,4 +1,5 @@
 class User {
+
     constructor(user){
       this.username = user.username
       this.patronus = user.patronus
@@ -6,16 +7,18 @@ class User {
       this.scores = user.scores
       this.highest_score = user.highest_score
       this.house_points = user.house_points
+      this.id = user.id
+      
     }
 
     login = () => {
         const login = document.getElementById('login-form') 
         const rules = document.getElementById('rules')
         const formspot = document.getElementById('formspot')
-        console.log(formspot)
         login.style.display = "none" 
         rules.style.display = "none"
         let div = document.createElement('div')
+        div.setAttribute('id', 'division1')
         div.classList.add('card')
         div.classList.add('mb-3')
         let h3 = document.createElement('h3')
@@ -27,7 +30,13 @@ class User {
         let h5 = document.createElement('h5')
         h5.classList.add('card-title')
         h5.setAttribute('id', 'pointsUserCard')
+        if (this.house.name != "Unsorted"){
         h5.innerHTML = `${this.house_points} points earned for the House Cup.`
+        }
+        else{
+          h5.innerHTML = "Sorted Users cannot earn points"
+
+        }
         let h6 = document.createElement('h6')
         h6.classList.add('card-subtitle')
         h6.setAttribute('id', 'cardHouseName')
@@ -68,17 +77,27 @@ class User {
         li3.classList.add('list-group-item')
         li3.innerHTML = `Element: ${this.house.element} `
         ul1.appendChild(li3)
+        let li5 = document.createElement('li')
+        li5.classList.add('list-group-item')
+        li5.setAttribute('id', 'listItemHighScore')
+        li5.innerHTML = `Highest Score: ${this.highest_score}`
+        ul1.appendChild(li5)
+
+        let highScoreBtn = document.createElement('button')
+        highScoreBtn.classList.add('btn')
+        highScoreBtn.classList.add('btn-outline-info')
+        highScoreBtn.innerHTML = `User High Score: ${this.highest_score} `
+        highScoreBtn.id = 'high_score'
+        const buttonsContainer =  document.getElementById('buttonsContainer');
+        buttonsContainer.appendChild(highScoreBtn)
+
         }
         let li4 = document.createElement('li')
         li4.classList.add('list-group-item')
         li4.innerHTML = `Patronus: ${this.patronus}`
 
-        let li5 = document.createElement('li')
-        li5.classList.add('list-group-item')
-        li5.setAttribute('id', 'listItemHighScore')
-        li5.innerHTML = `Highest Score: ${this.highest_score}`
+       
         ul1.appendChild(li4)
-        ul1.appendChild(li5)
         div3.appendChild(p)
         div3.appendChild(ul1)
         div.appendChild(h3)
@@ -87,15 +106,24 @@ class User {
         div.appendChild(div3)
         formspot.appendChild(div)
         
-        let highScoreBtn = document.createElement('button')
-        highScoreBtn.classList.add('btn')
-        highScoreBtn.classList.add('btn-outline-info')
-        highScoreBtn.innerHTML = `User High Score: ${this.highest_score} `
-        highScoreBtn.id = 'high_score'
-        const buttonsContainer =  document.getElementById('buttonsContainer');
-        buttonsContainer.appendChild(highScoreBtn)
+        
     }
 
+    resetForm = () => {
+      let div1 = document.getElementById("division1")
+      div1.remove()
+      let highScoreBtn = document.getElementById('high_score')
+      highScoreBtn.remove()
+    }
+
+  logout = () => {
+    const login = document.getElementById('login-form') 
+    const rules = document.getElementById('rules')
+    this.resetForm()
+    login.style.display = 'inline-block'
+    rules.style.display = 'inline-block'
+    game.user = "None"
+  }
 
 
 }

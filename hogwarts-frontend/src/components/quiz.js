@@ -87,6 +87,7 @@ class Quiz {
     }
 
     renderResults = () => {
+      console.log(game.user)
 
     const answersOnPage = document.getElementsByClassName('answers')
 
@@ -113,6 +114,7 @@ class Quiz {
       }
     });
     this.resultsContainer.innerHTML = `${this.numberCorrect} out of ${this.questions.length}`;
+    console.log(game.user.house.id)
     if (( game.user === "None") || (game.user.house.id === 1)){
       console.log("no need to save result")
     }
@@ -125,19 +127,21 @@ class Quiz {
 
   addScoreToUser = (user, score) =>{
     api.patchUserScore(user, score)
-    .then(function(user){
-    this.updateDomWithResults(user)  
-  })
+    .then(function(userObject){
+      let userUpdated = new User(userObject)
+      game.setUser(userUpdated)
+      game.user.resetForm()
+      game.user.login()  })
     }
 
-  updateDomWithResults(userObject){
-      let highScoreButton = document.getElementById('high_score')
-      highScoreButton.innerHTML = `User High Score: ${userObject.highest_score}`
-      let pointsUserCard = document.getElementById('pointsUserCard')
-      pointsUserCard.innerHTML = `${userObject.house_points} points earned for the House Cup.`
-      let listItemHighScore = document.getElementById('listItemHighScore')
-      listItemHighScore.innerHTML = `Highest Score: ${userObject.highest_score}`
-    }
+  //updateDomWithResults(userObject){
+  //    let highScoreButton = document.getElementById('high_score')
+    //  highScoreButton.innerHTML = `User High Score: ${userObject.highest_score}`
+    //  let pointsUserCard = document.getElementById('pointsUserCard')
+    //  pointsUserCard.innerHTML = `${userObject.house_points} points earned for the House Cup.`
+    //  let listItemHighScore = document.getElementById('listItemHighScore')
+    //  listItemHighScore.innerHTML = `Highest Score: ${userObject.highest_score}`
+   // }
 
   renderHouseResults = (quiz) =>{
     const answersOnPage = document.getElementsByClassName('answers')
@@ -175,26 +179,24 @@ class Quiz {
       if (game.user === "None"){
         console.log("no need to save result")
       }
-      else{ addHouseToUser(game.user.id, chosenHouse)
+      else{ this.addHouseToUser(game.user.id, chosenHouse)
       }
     }
 
-    addHouseToUser = (user, house) =>{
+    addHouseToUser = (user, house) => {
       api.patchUserHouse(user, house)
-      .then(function(user){
-        appendDOMWithChosenHouse(user)  
+      .then(function(userObject){
+       let userUpdated = new User(userObject)
+        game.setUser(userUpdated)
+        game.user.resetForm()
+        game.user.login()
+       let results = document.getElementById('results')
+        results.innerHTML = `${userObject.house.name} is your new House! ${userObject.house.house_information}`;
       })
+
     }
 
-
- appendDOMWithChosenHouse = (userObject) => {
-    this.resultsContainer.innerHTML = `${userObject.house.name} is your new House! ${userObject.house.house_information}`;
-    let cardHouseName = document.getElementById('cardHouseName')
-    cardHouseName.innerHTML = `${userObject.house.name}`
-    cardHouseName.color = userObject.house.primary_color
-  }
-
-
+//TO FIX TOMORROW GAME SET USER GOTTA BE NEW USER ALSO FIX THE POINTS ONE
 
 calculateHouseResults = () =>{
      let largestNumber = Math.max(this.gryffindorCount, this.slytherinCount, this.hufflepuffCount, this.ravenclawCount)

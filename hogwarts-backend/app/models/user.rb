@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   belongs_to :house
   serialize :scores, Array
+  has_many :scores
 
   def calculate_highest_score
     self.highest_score = self.scores.max
@@ -13,6 +14,7 @@ class User < ApplicationRecord
       self.house_points += 5
     else
       self.house_points += 0
+    end
   end
-end
+
 end
