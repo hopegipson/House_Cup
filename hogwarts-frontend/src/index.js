@@ -1,4 +1,6 @@
 
+      const api = new APIAdapter
+
   document.addEventListener("DOMContentLoaded", () => {
 
 const BASE_URL = "http://localhost:3000"
@@ -6,7 +8,7 @@ const HOUSES_URL = `${BASE_URL}/houses`
 const QUIZZES_URL = `${BASE_URL}/quizzes`
 const USERS_URL = `${BASE_URL}/users`
 const left = document.getElementsByClassName('left')[0]
-const buttonsContainer = document.getElementById('buttonsContainer')
+//const buttonsContainer = document.getElementById('buttonsContainer')
 const login = document.getElementById('login-form')
 const usernameField = document.getElementById('username-field')
 const patronusField = document.getElementById('patronus-field')
@@ -16,7 +18,7 @@ let currentSlide = 0;
 
 transFormtoLoggedOut()
 fetchHouses()
-createBasicQuizButtons()
+buttons = new GameButtons()
 renderUserOrLogin()
 
 //LEFT COLUMN
@@ -81,79 +83,9 @@ function createHeader(table, columns, array){
 
   //CENTER COLUMN
 
-  function fetchQuizzes(quizName){
-    fetch(QUIZZES_URL)
-    .then(resp => resp.json())
-    .then(json => renderQuizzes(json, quizName));
-}
-
-function renderQuizzes(quizzes, quizName
-    ){  const output = [];
-       quizSelected = quizzes.find(function(e) { return e.name === quizName})
-       new Quiz(quizSelected)
-          createButtons(quizSelected.id)
-          const slides = document.querySelectorAll(".slide");
-          showSlide(0, slides);
-      } 
-      
-  function createButtons(quizID){
-    let prevBtn = document.createElement('button')
-    prevBtn.innerHTML = "Previous Question"
-    prevBtn.id = 'previous'
-    prevBtn.addEventListener("click", showPreviousSlide)
-
-    let nextBtn = document.createElement('button')
-    nextBtn.innerHTML = "Next Question"
-    nextBtn.id = 'next'
-    nextBtn.addEventListener('click', showNextSlide)
-
-    let submitBtn = document.createElement('button')
-    submitBtn.classList.add('submitQuiz');
-    submitBtn.setAttribute('quiz-id' , quizID); 
-    submitBtn.innerHTML = "Submit Quiz"
-    submitBtn.id = 'submit'
-    submitBtn.addEventListener("click", resultQuiz)
-    quizContainer.append(prevBtn)
-    quizContainer.append(nextBtn)
-    quizContainer.append(submitBtn)
-
-  }
 
 
-function renderResults(quiz){
-  const answers = document.getElementsByClassName('answers')
-  let numberCorrect = 0;
-  quiz.questions.forEach( (currentQuestion, questionIndex) => {
 
-    const answerI = answers[questionIndex];
-
-    let userAnswer = 0
-    for (var i = 0, length = answerI.childElementCount; i < length; i+=2) {
-      if (answerI.children[i].children[0].checked) {
-       userAnswer = (answerI.children[i].children[0].value);
-      }
-      else if (answerI.children[i].children[0].checked == false){
-        answerI.children[i].children[0].disabled = true
-      }
-    }
-    if(userAnswer === currentQuestion.correct_answer){
-      numberCorrect++;
-      answers[questionIndex].style.color = 'lightgreen';
-    }
-    else{
-      answers[questionIndex].style.color = 'red';
-    }
-  });
-  const resultsContainer = document.getElementById('results')
-  resultsContainer.innerHTML = `${numberCorrect} out of ${quiz.questions.length}`;
-  if (resultsContainer.attributes[1].value === "none" || resultsContainer.attributes[1].value === 1){
-    console.log("no need to save result")
-  }
-  else{
-   let userNumber = resultsContainer.attributes[1].value
-   addScoreToUser(userNumber, numberCorrect)
-  }
-}
 
 function updateDomWithResults(userObject){
   let highScoreButton = document.getElementById('high_score')
@@ -286,78 +218,6 @@ function calculateHouseResults(gryffindor, slytherin, hufflepuff, ravenclaw){
 
 
 
-
-
-function resultQuiz(event) {
-  console.log(event.target.attributes[1])
-  let valueQ = event.target.attributes[1].value
-  if (valueQ == 1){
-  fetch(`${QUIZZES_URL}/${valueQ}`)
-  .then(resp => resp.json())
-  .then(json => renderResults(json));}
-  else if (valueQ == 2){
-    fetch(`${QUIZZES_URL}/${valueQ}`)
-    .then(resp => resp.json())
-    .then(json => renderHouseResults(json));
-  }
-}
-
-function showSlide(n, slideholder) {
-  
-  const previousButton = document.getElementById("previous");
-  const nextButton = document.getElementById("next");
-  const submitButton = document.getElementById('submit')
-
-  previousButton.myParam = slideholder
-  nextButton.myParam = slideholder
-
-  slideholder[currentSlide].classList.remove('slide-activated');
-  slideholder[n].classList.add('slide-activated');
-  currentSlide = n;
-  if(currentSlide === 0){
-    previousButton.style.display = 'none';
-  }
-  else{
-    previousButton.style.display = 'inline-block';
-  }
-  if(currentSlide === slideholder.length-1){
-    nextButton.style.display = 'none';
-    submitButton.style.display = 'inline-block';
-  }
-  else{
-    nextButton.style.display = 'inline-block';
-    submitButton.style.display = 'none';
-  }
-}
-
-function showNextSlide(event) {
-  let slidepassed = event.target.myParam
-  showSlide(currentSlide + 1, slidepassed);
-}
-
-function showPreviousSlide(event) {
-  let slidepassed = event.target.myParam
-  showSlide(currentSlide - 1, slidepassed);
-}
-
-function triviaButton(event){
-  let quizNamed = event.target.attributes.quiz_name.value
-  resetQuizSpace()
-  fetchQuizzes(quizNamed)
-  let selectedTriv = document.getElementById("trivia");
-  selectedTriv.innerHTML = "Restart Trivia"
-  resetSortingButton()
-}
-
-function sortingButton(event){
-  let quizNamed = event.target.attributes.quiz_name.value
-  resetQuizSpace()
-  fetchQuizzes(quizNamed)
-  let selectedSort = document.getElementById("sorting");
-  selectedSort.innerHTML = "Restart Sorting"
-  resetTriviaButton()
-}
-
 function resetQuizSpace(){
   let quizContainer = document.getElementById('contain')
   let resultsContainer = document.getElementById('results')
@@ -369,44 +229,9 @@ function resetQuizSpace(){
   divquiz.setAttribute('id', 'quiz')
   divone.appendChild(divquiz)
   quizContainer.appendChild(divone)
-
-
-
-
   console.log(quizContainer)
 }
 
-function resetTriviaButton(){
- let selectedTriv = document.getElementById("trivia");
- selectedTriv.innerHTML = "Trivia Challenge"
-}
-
-function resetSortingButton(){
-  let selectedSort = document.getElementById("sorting");
-  selectedSort.innerHTML = "Sorting Hat"
-}
-
-function createBasicQuizButtons(){
-  let triviaBtn = document.createElement('button')
-  triviaBtn.setAttribute('quiz_name', "Hogwarts Trivia Challenge"); 
-  triviaBtn.classList.add('btn')
-  triviaBtn.classList.add('btn-outline-danger')
-  triviaBtn.innerHTML = "Trivia Challenge"
-  triviaBtn.id = 'trivia'
-  triviaBtn.addEventListener("click", triviaButton)
-  let sortingBtn = document.createElement('button')
-  sortingBtn.setAttribute('quiz_name', "Hogwarts Sorting Hat"); 
-  sortingBtn.classList.add('btn')
-  sortingBtn.classList.add('btn-outline-danger')
-  sortingBtn.innerHTML = "Sorting Hat"
-  sortingBtn.id = 'sorting'
-  sortingBtn.addEventListener("click", sortingButton)
-  let divider = document.createElement('div')
-  divider.classList.add('divider')
-  buttonsContainer.append(triviaBtn)
-  buttonsContainer.append(sortingBtn)
-  buttonsContainer.appendChild(divider)
-}
 
 
 //RIGHT COLUMN

@@ -4,6 +4,7 @@ class Question {
         this.slide.classList.add('slide');
         this.createQuestion(question)
         this.createAnswers(question)
+        this.correct_answer = question.correct_answer
     }
 
     createQuestion = (question) => {
