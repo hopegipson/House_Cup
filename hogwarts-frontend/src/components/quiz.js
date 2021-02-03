@@ -168,6 +168,9 @@ class Quiz {
   
       if (game.user === "None"){
         console.log("no need to save result")
+        let results = document.getElementById('results')
+        results.innerHTML = `${chosenHouse} has been picked for as your hypothetical house! To save this result and join the house to unlock more information, please create a user.`;
+
       }
       else if (game.user.house.name == chosenHouse) {
         let results = document.getElementById('results')

@@ -35,12 +35,13 @@ class User {
     }
 
     login = () => {
-   
+        const breaks = document.getElementById('breaks')
         const login = document.getElementById('login-form') 
         const rules = document.getElementById('rules')
         const formspot = document.getElementById('formspot')
         login.style.display = "none" 
         rules.style.display = "none"
+        breaks.style.display = "none"
         let div = document.createElement('div')
         div.setAttribute('id', 'division1')
         div.classList.add('card')
@@ -120,6 +121,13 @@ class User {
         li4.classList.add('list-group-item')
         li4.innerHTML = `Patronus: ${this.patronus}`
 
+        let logoutBtn = document.createElement('button')
+        logoutBtn.classList.add('btn')
+        logoutBtn.classList.add('btn-outline-danger')
+        logoutBtn.innerHTML = "Logout"
+        logoutBtn.id = 'logout'
+        logoutBtn.addEventListener("click", this.logout)
+
        
         ul1.appendChild(li4)
         div3.appendChild(p)
@@ -128,10 +136,10 @@ class User {
         div.appendChild(div2)
         div.appendChild(image)
         div.appendChild(div3)
+        div.appendChild(logoutBtn)
         formspot.appendChild(div)
         
-        
-    }
+    } 
 
     resetForm = () => {
       let div1 = document.getElementById("division1")
@@ -141,9 +149,12 @@ class User {
     }
 
   logout = () => {
+    const breaks = document.getElementById('breaks')
     const login = document.getElementById('login-form') 
     const rules = document.getElementById('rules')
     this.resetForm()
+    breaks.style.display = 'block'
+
     login.style.display = 'inline-block'
     rules.style.display = 'inline-block'
     game.user = "None"

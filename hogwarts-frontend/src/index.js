@@ -7,7 +7,6 @@ const BASE_URL = "http://localhost:3000"
 const HOUSES_URL = `${BASE_URL}/houses`
 const USERS_URL = `${BASE_URL}/users`
 const left = document.getElementsByClassName('left')[0]
-//const buttonsContainer = document.getElementById('buttonsContainer')
 const login = document.getElementById('login-form')
 const usernameField = document.getElementById('username-field')
 const patronusField = document.getElementById('patronus-field')
@@ -119,13 +118,6 @@ function lookForUser(users, username, patronus){
   }
 }
 
-function transFormtoLoggedOut(){
-  //need to reverse this
-  //bring back the form
-  //also need to make it happen so if your patronus is wrong you can't login
-  //resultsContainer.setAttribute('userid', userObject.id)  set to 1
-
-}
 
 function renderUserOrLogin(){
   login.addEventListener("submit", function(event){
