@@ -4,8 +4,18 @@ class APIAdapter {
         this.url = `http://localhost:${port}`
       }
 
-    parseJSON = res => res.json()
-
+      parseJSON = response => {
+        if (response.status === 200){
+          return response.json()
+        }
+        else {
+          this.catch(response)
+          .then(response => console.log(response.error))
+        }
+      }
+      
+      catch = response => response.json()
+    
     headers = {"Accepts":"application/json", "Content-Type": "application/json"}
 
     get usersURL(){
@@ -18,6 +28,10 @@ class APIAdapter {
 
     get quizzesURL(){
         return this.url + `/quizzes`
+    }
+
+    get scoresURL(){
+        return this.url + `/scores`
     }
 
     getQuizzes = () => fetch(this.quizzesURL).then(this.parseJSON)
@@ -46,5 +60,37 @@ class APIAdapter {
       })
       })
       .then(this.parseJSON)
+
+      postUser = (username, patronus) => fetch(this.usersURL, {
+        method: 'POST',
+        headers: this.headers,
+        body: JSON.stringify({
+            user_info: {
+              user_username: username,
+              user_patronus: patronus
+            }
+          })
+      })
+      .then(this.parseJSON)
+
+      postScore = (numberCorrect, user_id) => fetch(this.scoresURL, {
+        method: 'POST',
+        headers: this.headers,
+        body: JSON.stringify({
+            score_info: {
+              number_correct: numberCorrect,
+              user_id: user_id,
+            }
+          })
+      })
+      .then(this.parseJSON)
+
+      deleteScore = (id) => fetch(this.scoresURL + `/${id}`, {
+        method: 'DELETE',
+        headers: this.headers,
+      })
+      .then(data => console.log("Deleted"))
+      .catch(function(error){
+          console.log(error)})
 
 }

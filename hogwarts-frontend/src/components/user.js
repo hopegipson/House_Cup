@@ -5,13 +5,37 @@ class User {
       this.patronus = user.patronus
       this.house = user.house
       this.scores = user.scores
-      this.highest_score = user.highest_score
-      this.house_points = user.house_points
+      console.log(user.scores.length === 0)
+      if (user.scores.length === 0){
+        this.highest_score = 0
+        this.house_points = 0
+      }
+      else{
+        this.getHighestScore()
+      this.getHousePoints()
+      }
       this.id = user.id
       
     }
 
+    getHighestScore = () => {
+     let numberArray = []
+     this.scores.forEach(score => {
+      numberArray.push(score.number_correct)
+     })
+      this.highest_score = Math.max(...numberArray)
+    }
+
+    getHousePoints = () => {
+      let numberArray = []
+      this.scores.forEach(score => {
+       numberArray.push(score.house_points)
+      })
+      this.house_points = [...numberArray].reduce((a, b) => a + b, 0)
+    }
+
     login = () => {
+   
         const login = document.getElementById('login-form') 
         const rules = document.getElementById('rules')
         const formspot = document.getElementById('formspot')
@@ -123,6 +147,13 @@ class User {
     login.style.display = 'inline-block'
     rules.style.display = 'inline-block'
     game.user = "None"
+  }
+
+  removeScores = () => {
+    this.scores.forEach(score =>
+      api.deleteScore(score.id)
+    )
+    this.scores =[]
   }
 
 

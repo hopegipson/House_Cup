@@ -53,29 +53,23 @@ ActiveRecord::Schema.define(version: 5) do
 
   create_table "scores", force: :cascade do |t|
     t.integer "number_correct"
-    t.integer "house_points"
+    t.integer "house_points", default: 0
     t.bigint "user_id", null: false
-    t.bigint "house_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["house_id"], name: "index_scores_on_house_id"
     t.index ["user_id"], name: "index_scores_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "patronus"
-    t.bigint "house_id", default: 0, null: false
-    t.text "scores"
-    t.integer "highest_score", default: 0
-    t.integer "house_points", default: 0
+    t.bigint "house_id", default: 1, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["house_id"], name: "index_users_on_house_id"
   end
 
   add_foreign_key "questions", "quizzes"
-  add_foreign_key "scores", "houses"
   add_foreign_key "scores", "users"
   add_foreign_key "users", "houses"
 end

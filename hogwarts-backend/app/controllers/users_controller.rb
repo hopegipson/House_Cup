@@ -18,13 +18,13 @@ class UsersController < ApplicationController
 
       def update
         user = User.find_by(id: params[:id])
-        if user_params_score[:scores]
-        user.scores << user_params_score[:scores]
-        user.check_score_for_house_points(user_params_score[:scores])
-        user.calculate_highest_score
-        elsif user_params_score[:house_name]
+       # if user_params_score[:scores]
+       # user.scores << user_params_score[:scores]
+       # user.check_score_for_house_points(user_params_score[:scores])
+       # user.calculate_highest_score
+        #elsif user_params_score[:house_name]
           user.house = House.find_by(name: user_params_score[:house_name])
-        end
+       # end
         user.save
         render json: UserSerializer.new(user).to_serialized_json
       end
@@ -36,7 +36,9 @@ class UsersController < ApplicationController
       end
 
       def user_params_score
-        params.require(:user_info_score).permit(:scores, :house_name)
+       # params.require(:user_info_score).permit(:scores, :house_name)
+        params.require(:user_info_score).permit(:house_name)
+
       end
 
  

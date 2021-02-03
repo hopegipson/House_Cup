@@ -49,7 +49,7 @@ hogwarts_house_collection.each do |house|
     (1..house_size).each do |poke|
         username = Faker::Name.first_name
         patronus = Faker::Creature::Animal.name
-        User.create(username: username, patronus: patronus, house_id: house.id, scores: [0])
+        User.create(username: username, patronus: patronus, house_id: house.id)
       end
     end
 

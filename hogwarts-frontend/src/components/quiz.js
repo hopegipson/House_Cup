@@ -78,6 +78,7 @@ class Quiz {
       }
 
     resultQuiz = () => {
+      this.submitBtn.disabled = true
         if (this.id === 1){
             this.renderResults()
         }
@@ -119,29 +120,18 @@ class Quiz {
       console.log("no need to save result")
     }
     else{
-     //let userNumber = this.resultsContainer.attributes[1].value
-     this.addScoreToUser(game.user.id, this.numberCorrect)
+      api.postScore(this.numberCorrect, game.user.id).then(function(scoreObject){
+      api.getUser(game.user.id).then(function(userObject){
+        let userUpdated = new User(userObject)
+        console.log(userUpdated)
+        game.setUser(userUpdated)
+        game.user.resetForm()
+        game.user.login() 
+      })
+    })
     }
 
   }
-
-  addScoreToUser = (user, score) =>{
-    api.patchUserScore(user, score)
-    .then(function(userObject){
-      let userUpdated = new User(userObject)
-      game.setUser(userUpdated)
-      game.user.resetForm()
-      game.user.login()  })
-    }
-
-  //updateDomWithResults(userObject){
-  //    let highScoreButton = document.getElementById('high_score')
-    //  highScoreButton.innerHTML = `User High Score: ${userObject.highest_score}`
-    //  let pointsUserCard = document.getElementById('pointsUserCard')
-    //  pointsUserCard.innerHTML = `${userObject.house_points} points earned for the House Cup.`
-    //  let listItemHighScore = document.getElementById('listItemHighScore')
-    //  listItemHighScore.innerHTML = `Highest Score: ${userObject.highest_score}`
-   // }
 
   renderHouseResults = (quiz) =>{
     const answersOnPage = document.getElementsByClassName('answers')
@@ -179,11 +169,18 @@ class Quiz {
       if (game.user === "None"){
         console.log("no need to save result")
       }
-      else{ this.addHouseToUser(game.user.id, chosenHouse)
+      else if (game.user.house.name == chosenHouse) {
+        let results = document.getElementById('results')
+        results.innerHTML = `${game.user.house.name} has been picked for you again! You are already in the house of ${game.user.house.name}, and will not switch houses. ${game.user.house.house_information}`;
+      }
+      else {
+        this.addHouseToUser(game.user.id, chosenHouse)
       }
     }
 
     addHouseToUser = (user, house) => {
+      game.user.removeScores()
+      
       api.patchUserHouse(user, house)
       .then(function(userObject){
        let userUpdated = new User(userObject)
@@ -192,11 +189,11 @@ class Quiz {
         game.user.login()
        let results = document.getElementById('results')
         results.innerHTML = `${userObject.house.name} is your new House! ${userObject.house.house_information}`;
-      })
-
+    })
     }
 
-//TO FIX TOMORROW GAME SET USER GOTTA BE NEW USER ALSO FIX THE POINTS ONE
+  
+
 
 calculateHouseResults = () =>{
      let largestNumber = Math.max(this.gryffindorCount, this.slytherinCount, this.hufflepuffCount, this.ravenclawCount)

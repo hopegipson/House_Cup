@@ -83,27 +83,13 @@ function createHeader(table, columns, array){
 //RIGHT COLUMN
 
 function createUser(username, patronus) {
-  return fetch(USERS_URL, {
-    method: 'POST',
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      user_info: {
-        user_username: username,
-        user_patronus: patronus
-      }
-    }
-    )
-  })
-  .then(res => res.json())
+  api.postUser(username, patronus)
   .then(function(user){
     console.log(user)
     let user1 = new User(user)
     game.setUser(user1)
     user1.login()
   })
-  .catch(function(error) {
-    console.log(error)
-})
 }
 
 function lookForUser(users, username, patronus){
