@@ -147,7 +147,8 @@ class User {
       let div1 = document.getElementById("division1")
       div1.remove()
       let highScoreBtn = document.getElementById('high_score')
-      highScoreBtn.remove()
+      if (highScoreBtn != null){
+      highScoreBtn.remove()}
     }
 
   logout = () => {
