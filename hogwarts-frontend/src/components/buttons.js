@@ -29,8 +29,7 @@ class GameButtons {
     let quizID = event.target.attributes.quiz_id.value
     GameButtons.resetQuizSpace()
     this.renderQuiz(quizID)
-    let selectedTriv = document.getElementById("trivia");
-    selectedTriv.innerHTML = "Restart Trivia"
+    this.triviaBtn.innerHTML= "Restart Trivia"
     this.resetSortingButton()
   }
   
@@ -40,8 +39,7 @@ class GameButtons {
     let quizID = event.target.attributes.quiz_id.value
     GameButtons.resetQuizSpace()
     this.renderQuiz(quizID)
-    let selectedSort = document.getElementById("sorting");
-    selectedSort.innerHTML = "Restart Sorting"
+    this.sortingBtn.innerHTML = "Restart Sorting"
     this.resetTriviaButton()
   }
 

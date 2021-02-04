@@ -28,7 +28,6 @@ class LoginDisplay {
             if (selectedObject){
               const user = new User(selectedObject)
               game.setUser(user)
-              //user.login()
               LoginDisplay.login(user)
             }
             else{
@@ -36,7 +35,6 @@ class LoginDisplay {
               this.errors.style.color = 'red'
             }
         }
-          console.log("got here")
       }
    
       checkToSeeIfUserExists = () => {
@@ -48,7 +46,6 @@ class LoginDisplay {
       createUser = (username, patronus) => {
         api.postUser(username, patronus)
         .then(function(user){
-          console.log(user)
           let user1 = new User(user)
           game.setUser(user1)
           LoginDisplay.login(user1)
@@ -175,10 +172,10 @@ class LoginDisplay {
       }
   
     static logout = () => {
-      const breaks = document.getElementById('breaks')
-      const login = document.getElementById('login-form') 
-      const rules = document.getElementById('rules')
-      const errors = document.getElementById('errors')
+      let breaks = document.getElementById('breaks')
+      let login = document.getElementById('login-form') 
+      let rules = document.getElementById('rules')
+      let errors = document.getElementById('errors')
   
       LoginDisplay.resetForm()
       GameButtons.resetQuizSpace()

@@ -3,7 +3,6 @@ class LeaderboardDisplay {
     static createLDisplay = () => {
         const leaderboardDisplay = new LeaderboardDisplay
         leaderboardDisplay.createUserLeaderboard()
-        //leaderboardDisplay.createGryffindorLeaderboard()
         leaderboardDisplay.gryffindorBanner = document.getElementById('gryffindorbutton')
         leaderboardDisplay.slytherinBanner = document.getElementById('slytherinbutton')
         leaderboardDisplay.hufflepuffBanner = document.getElementById('hufflepuffbutton')
@@ -11,15 +10,6 @@ class LeaderboardDisplay {
         leaderboardDisplay.hogwartsBanner = document.getElementById('hogwartsbutton')
         leaderboardDisplay.housecupBanner = document.getElementById('housecupbutton')
         leaderboardDisplay.addListenerstoButtons()
-
-
-
-
-
-        console.log(leaderboardDisplay.gryffindorBanner)
-        // leaderboardDisplay.createGryffindorLeaderboard()
-      //  this.gryffindorBanner = document.getElementById('gryffindor')
-       // this.hufflepuffBanner = document.getElementById('hufflepuff')
    }
 
     createUserLeaderboard = () => {
@@ -43,7 +33,6 @@ class LeaderboardDisplay {
                     GryffindorUsers.push(user)
             }
             })
-           // console.log(GryffindorUsers)
         this.leaderboardGryffindor = new Leaderboard(GryffindorUsers, "Gryffindor Leaderboard"); 
         this.leaderboardGryffindor.appendLeaderBoardToDOM()
         }))
@@ -96,7 +85,6 @@ class LeaderboardDisplay {
                     housesArray.push(house)
                 }
             })
-            console.log(housesArray)
             this.leaderboardHouse = new HouseLeaderboard(housesArray, "House Cup Leaderboard"); 
             this.leaderboardHouse.appendLeaderBoardToDOM()
             }))

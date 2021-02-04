@@ -20,8 +20,6 @@ class Quiz {
 
 
     createQuestions = () => {
-      console.log(this.selectedQuestions)
-
         this.selectedQuestions.forEach((currentQuestion) => {
             const question1 = new Question(currentQuestion)
            this.slides.push(question1.slide)
@@ -104,16 +102,11 @@ class Quiz {
     }
 
     renderResults = () => {
-      console.log(game.user)
-
     const answersOnPage = document.getElementsByClassName('answers')
-
-    console.log(this.questions)
     this.questions.forEach((currentQuestion, questionIndex) => {
     const answerI = answersOnPage[questionIndex]
       let userAnswer = 0
       for (var i = 0, length = answerI.childElementCount; i < length; i+=2) {
-        console.log(answerI.children[i].children[0].checked)
         if (answerI.children[i].children[0].checked) {
        userAnswer = (answerI.children[i].children[0].value);
         }
@@ -121,7 +114,6 @@ class Quiz {
           answerI.children[i].children[0].disabled = true
         }
       }
-      console.log(userAnswer)
       if(userAnswer === currentQuestion.correct_answer){
         this.numberCorrect++;
         answersOnPage[questionIndex].style.color = 'lightgreen';
@@ -131,7 +123,6 @@ class Quiz {
       }
     });
     this.resultsContainer.innerHTML = `${this.numberCorrect} out of ${this.questions.length}`;
-    console.log(game.user.house.id)
     if (( game.user === "None") || (game.user.house.id === 1)){
       console.log("no need to save result")
     }
@@ -218,7 +209,6 @@ class Quiz {
 calculateHouseResults = () =>{
      let largestNumber = Math.max(this.gryffindorCount, this.slytherinCount, this.hufflepuffCount, this.ravenclawCount)
       let house = []
-      console.log(largestNumber)
       if (this.gryffindorCount === largestNumber){ house.push("Gryffindor")}
       if (this.slytherinCount === largestNumber){ house.push("Slytherin")}
       if (this.ravenclawCount === largestNumber){ house.push("Ravenclaw")}
@@ -230,7 +220,6 @@ calculateHouseResults = () =>{
         return house[Math.floor(Math.random()*house.length)]
       }
       }
-    
 
-  
+    
 }

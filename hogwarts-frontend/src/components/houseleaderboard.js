@@ -2,14 +2,11 @@ class HouseLeaderboard {
     constructor(houses, title){
         this.title = title
         this.houses = houses
-        console.log(this.houses)
         this.calculateHouseScores()
    
     }
 
     calculateHouseScores = () => {
-        console.log(this.houses)
-        console.log(this.houses.users)
         this.house_points = {}
         this.houses.forEach(house => {
             let points = 0
