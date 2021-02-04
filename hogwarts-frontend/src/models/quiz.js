@@ -5,7 +5,8 @@ class Quiz {
         this.id = quiz.id
         this.slides = []
         this.questions = []
-        this.pickTenQuestions(quiz)
+        this.pickFiveQuestions(quiz)
+        //this.pickTenQuestions(quiz)
         this.createQuestions()
         this.createButtons()
         this.currentSlide = 0
@@ -32,14 +33,21 @@ class Quiz {
       return Math.floor(Math.random() * items.length);
     }
 
-
-    pickTenQuestions = (quiz) => {
+    pickFiveQuestions = (quiz) => {
       this.selectedQuestions = []
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 5; i++) {
         let removedItem = quiz.questions.splice(this.getRandomIndex(quiz.questions), 1);
         this.selectedQuestions.push(removedItem[0])
       }
     }
+
+    // pickTenQuestions = (quiz) => {
+    //   this.selectedQuestions = []
+    //   for (let i = 0; i < 10; i++) {
+    //     let removedItem = quiz.questions.splice(this.getRandomIndex(quiz.questions), 1);
+    //     this.selectedQuestions.push(removedItem[0])
+    //   }
+    // }
 
     createButtons = () => {
         this.prevBtn = document.createElement('button')
