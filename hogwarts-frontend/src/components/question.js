@@ -16,7 +16,9 @@ class Question {
         this.id = question.id
         this.question = document.createElement('div')
         this.question.classList.add('questions');
-        this.question.innerHTML = `${question.question}`
+        this.question.style.color = "yellow"
+
+        this.question.innerHTML =`${question.question}`
         this.slide.appendChild(this.question)
     }
 

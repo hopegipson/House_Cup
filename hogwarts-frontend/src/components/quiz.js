@@ -5,7 +5,8 @@ class Quiz {
         this.id = quiz.id
         this.slides = []
         this.questions = []
-        this.createQuestions(quiz)
+        this.pickTenQuestions(quiz)
+        this.createQuestions()
         this.createButtons()
         this.currentSlide = 0
         this.numberCorrect = 0
@@ -18,13 +19,30 @@ class Quiz {
     }
 
 
-    createQuestions = (quiz) => {
-        quiz.questions.forEach((currentQuestion) => {
+    createQuestions = () => {
+      console.log(this.selectedQuestions)
+
+        this.selectedQuestions.forEach((currentQuestion) => {
             const question1 = new Question(currentQuestion)
            this.slides.push(question1.slide)
            this.questions.push(question1)
            this.quizElement.appendChild(question1.slide)
         })
+    }
+
+    getRandomIndex = (items) => {
+      return Math.floor(Math.random() * items.length);
+    }
+
+
+    pickTenQuestions = (quiz) => {
+      this.selectedQuestions = []
+      for (let i = 0; i < 10; i++) {
+        //let removedItem = quiz.questions[Math.floor(Math.random() * quiz.questions.length)];
+
+        let removedItem = quiz.questions.splice(this.getRandomIndex(quiz.questions), 1);
+        this.selectedQuestions.push(removedItem[0])
+      }
     }
 
     createButtons = () => {
@@ -134,7 +152,7 @@ class Quiz {
 
   }
 
-  renderHouseResults = (quiz) =>{
+  renderHouseResults = () =>{
     const answersOnPage = document.getElementsByClassName('answers')
     this.questions.forEach( (currentQuestion, questionIndex) => {
   

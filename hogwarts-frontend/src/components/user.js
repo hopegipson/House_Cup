@@ -5,6 +5,7 @@ class User {
       this.patronus = user.patronus
       this.house = user.house
       this.scores = user.scores
+
       if (user.scores.length === 0){
         this.highest_score = 0
         this.house_points = 0
