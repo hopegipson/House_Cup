@@ -1,20 +1,25 @@
-class Leaderboard {
-    constructor(users, title){
+class HouseLeaderboard {
+    constructor(houses, title){
         this.title = title
-        this.users = users
-        this.calculateUserScores()
+        this.houses = houses
+        console.log(this.houses)
+        this.calculateHouseScores()
+   
     }
 
-    calculateUserScores = () => {
-      this.house_points = {}
-        this.users.forEach(user => {
-            let numberArray = []
-            user.scores.forEach(score => {
-                numberArray.push(score.house_points)
-            })
-            this.house_points[user.id] =  [...numberArray].reduce((a, b) => a + b, 0)
+    calculateHouseScores = () => {
+        console.log(this.houses)
+        console.log(this.houses.users)
+        this.house_points = {}
+        this.houses.forEach(house => {
+            let points = 0
+            house.users.forEach(user => {
+                 user.scores.forEach(score => {
+                points += score.house_points})
         })
-       this.sortedPoints = Object.entries(this.house_points).sort((a, b) => b[1]-a[1])
+        this.house_points[house.id] = points
+    })
+    this.sortedPoints = Object.entries(this.house_points).sort((a, b) => b[1]-a[1])
     }
 
     appendLeaderBoardToDOM = () => {
@@ -37,9 +42,9 @@ class Leaderboard {
         div3.classList.add('card-body')
         let index = 1
         this.sortedPoints.slice(0, 9).forEach(value =>{
-        let selectedUser = (this.users.find(x => x.id === parseInt(value[0])))
+        let selectedHouse = (this.houses.find(x => x.id === parseInt(value[0])))
         let li5 = document.createElement('li')
-        li5.style.color = selectedUser.house.primary_color
+        li5.style.color = selectedHouse.primary_color
         li5.classList.add('list-group-item')
         let br = document.createElement('br')
 
@@ -47,11 +52,11 @@ class Leaderboard {
         image.setAttribute('width', '20px')
         image.setAttribute('fill', '#868e96')
         image.setAttribute('id', 'houseImage')
-        image.src= `${selectedUser.house.crest}`
+        image.src= `${selectedHouse.crest}`
         li5.appendChild(image)
-        li5.innerHTML += `       ${selectedUser.username}: `
+        li5.innerHTML += `       ${selectedHouse.name}: `
         li5.appendChild(br)
-        li5.innerHTML += `${value[1]} points for ${selectedUser.house.name}`
+        li5.innerHTML += `${value[1]} points earned by ${selectedHouse.users.length} students`
         ul1.appendChild(li5)
         index ++
 
@@ -75,4 +80,3 @@ class Leaderboard {
    
 
 }
-

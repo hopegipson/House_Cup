@@ -8,6 +8,9 @@
     <script type="application/javascript" src="src/components/user.js" charset="UTF-8"></script>
     <script type="application/javascript" src="src/components/game.js" charset="UTF-8"></script>
     <script type="application/javascript" src="src/components/leaderboard.js" charset="UTF-8"></script>
+    <script type="application/javascript" src="src/components/houseleaderboard.js" charset="UTF-8"></script>
+
+    <script type="application/javascript" src="src/components/leaderboarddisplay.js" charset="UTF-8"></script>
 
 
 
@@ -17,61 +20,61 @@
     <script type="application/javascript" src="src/index.js" charset="UTF-8"></script>
 
 <link rel="stylesheet" href="/Users/hopegipson/hogwarts-project/hogwarts-frontend/stylesheets/styles.css" />
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="#">Hogwarts House Cup</a>
 
-<div class="collapse navbar-collapse" >
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item active">
-      <a class="nav-link" href="#"> User Leaderboard
-        <span class="sr-only">(current)</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Slytherin Leaderboard</a>
-    </li>  
-    <li class="nav-item">
-      <a class="nav-link" href="#">Hufflepuff Leaderboard</a>
-    </li>  
-    <li class="nav-item">
-      <a class="nav-link" href="#">Ravenclaw Leaderboard</a>
-    </li>  
-    <li class="nav-item">
-      <a class="nav-link" href="#">Gryffindor Leaderboard</a>
-    </li> 
-    <li class="nav-item active">
-      <a class="nav-link" href="#">User
-        <span class="sr-only">(current)</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Rules</a>
-    </li>  
-    <li class="nav-item">
-      <a class="nav-link" href="#">My Stats</a>
-    </li> 
-
-  
-  </ul>
-</div>
-</nav>
 
     <meta charset="utf-8">
     <title></title>
   </head>
   <body>
+   
     <div class="left">
-      <br>
-      <br>
-      <br>
+      <div id="formspot2" class="row">
+        </div>
+   
       </div>
     
 
       <div class="center2">
         <br>
         <br>
-        <br>
-        <div class="jumbotron">
+        <div id = 'buttonsContainer2'>
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="  width:95%;">
+            <a class="navbar-brand" href="#">Hogwarts House Cup</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarColor02">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <button id="gryffindorbutton" class= "btn btn-gryffindor">  </button>
+
+                </li>
+                <li class="nav-item active">
+                  <button id="slytherinbutton" class= "btn btn-slytherin"> </button>
+
+
+                </li>
+                <li class="nav-item active">
+                  <button id="ravenclawbutton" class= "btn btn-ravenclaw"> </button>
+                </li>
+                <li class="nav-item active">
+                  <button id="hufflepuffbutton" class= "btn btn-hufflepuff"> </button>
+                </li>
+                <li class="nav-item active">
+                  <button id="hogwartsbutton" class= "btn btn-hogwarts"> </button>
+                </li>
+                <li class="nav-item active">
+                  <button id="housecupbutton" class= "btn btn-housecup"> </button>
+                </li>
+               
+                
+              </ul>
+             
+            </div>
+          </nav>
+        </div>
+        <div class="jumbotron" style="  width:95%; height:650px;" >
           <p class="lead" id='explanation'>Put here an explanation of the game you are currently playing</p>
 
           <div id="buttonsContainer"></div>
@@ -87,6 +90,8 @@
         <div id="results" userid="none"></div>
 
           </p>
+          <br>
+          <br>
         </div>
       </div>
       <div class ='breaks' id="breaks">
@@ -108,12 +113,23 @@
             <br><br>
           </form>
           </div>
+          <div id= 'rules'>
+
+            <div class="card mb-3" style="margin:50px;  width:75%;">
+              <br>
+              <h5 class="card-title">Instructions for new Wizards</h5>
+
+            <div class="card-body">
+              <h5>  Login using username and patronus. If your patronus does not match saved patronus you will not be logged in.</h5>
+              <br>
+               <h5> If you choose not to log in: You can still play the games BUT results will not be saved AND points will not be scored for your House. </h5>
+
+            </div>
+ 
+            <br>
+          </div>
         </div>
-        <div id= 'rules'>
-      <h5>Login using username and patronus. If your patronus does not match saved patronus for that username, you will not be logged in.</h5>
-      <br>
-      <h5>If you choose not to log in, you can still play the games but results will not be saved and points will not be scored for your House.</h5>
-    </div>
+       
       <div class="row">
         </div>
       </div>

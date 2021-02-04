@@ -145,6 +145,54 @@ body {
   margin-top: 40px;
 }
 
+.btn-hufflepuff {
+  background-image: url('/Users/hopegipson/hogwarts-project/hogwarts-frontend/images/badger.png'); 
+  background-size: cover; 
+  border-color: #ffffff;
+  width: 110px;
+  height: 90px;
+}
+
+.btn-slytherin {
+  background-image: url('/Users/hopegipson/hogwarts-project/hogwarts-frontend/images/snake.png'); 
+  background-size: cover; 
+  border-color: #ffffff;
+  width: 110px;
+  height: 90px;
+}
+
+.btn-gryffindor {
+  background-image: url('/Users/hopegipson/hogwarts-project/hogwarts-frontend/images/lion.png'); 
+  background-size: cover; 
+  border-color: #ffffff;
+  width: 110px;
+  height: 90px;
+}
+
+.btn-ravenclaw {
+  background-image: url('/Users/hopegipson/hogwarts-project/hogwarts-frontend/images/eagle.png'); 
+  background-size: cover; 
+  border-color: #ffffff;
+  width: 110px;
+  height: 90px;
+}
+
+.btn-hogwarts {
+  background-image: url('/Users/hopegipson/hogwarts-project/hogwarts-frontend/images/hogwarts.png'); 
+  background-size: cover; 
+  border-color: #ffffff;
+  width: 110px;
+  height: 90px;
+}
+
+.btn-housecup {
+  background-image: url('/Users/hopegipson/hogwarts-project/hogwarts-frontend/images/housecup.png'); 
+  background-size: cover; 
+  border-color: #ffffff;
+  width: 110px;
+  height: 90px;
+}
+
 
 hr {
   box-sizing: content-box;

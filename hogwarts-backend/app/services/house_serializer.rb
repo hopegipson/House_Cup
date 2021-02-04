@@ -4,8 +4,6 @@ class HouseSerializer
     end
    
     def to_serialized_json
-      @house.to_json(:include => {
-        :users => {:only => [:username, :patronus, :scores, :highest_score, :house_points]},
-      }, :except => [:updated_at, :created_at])
+      @house.to_json(include: {users: {include: :scores}})
     end
   end

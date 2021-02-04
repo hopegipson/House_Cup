@@ -5,7 +5,6 @@ class User {
       this.patronus = user.patronus
       this.house = user.house
       this.scores = user.scores
-      console.log(user.scores.length === 0)
       if (user.scores.length === 0){
         this.highest_score = 0
         this.house_points = 0
@@ -43,6 +42,8 @@ class User {
         rules.style.display = "none"
         breaks.style.display = "none"
         let div = document.createElement('div')
+        div.style.margin =  "50px"
+
         div.setAttribute('id', 'division1')
         div.classList.add('card')
         div.classList.add('mb-3')
@@ -71,7 +72,7 @@ class User {
         div2.appendChild(h6)
 
         let image = document.createElement('img')
-        image.setAttribute('width', '350px')
+        image.setAttribute('width', '327px')
         image.setAttribute('fill', '#868e96')
         image.setAttribute('id', 'houseImage')
         image.src= `${this.house.image}`
