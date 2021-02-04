@@ -153,10 +153,14 @@ class User {
     const breaks = document.getElementById('breaks')
     const login = document.getElementById('login-form') 
     const rules = document.getElementById('rules')
+    const errors = document.getElementById('errors')
+
     this.resetForm()
     breaks.style.display = 'block'
 
     login.style.display = 'inline-block'
+    errors.innerHTML = ''
+    login.reset()
     rules.style.display = 'inline-block'
     game.user = "None"
   }
