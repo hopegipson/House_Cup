@@ -38,8 +38,6 @@ class Quiz {
     pickTenQuestions = (quiz) => {
       this.selectedQuestions = []
       for (let i = 0; i < 10; i++) {
-        //let removedItem = quiz.questions[Math.floor(Math.random() * quiz.questions.length)];
-
         let removedItem = quiz.questions.splice(this.getRandomIndex(quiz.questions), 1);
         this.selectedQuestions.push(removedItem[0])
       }
@@ -141,7 +139,6 @@ class Quiz {
       api.postScore(this.numberCorrect, game.user.id).then(function(scoreObject){
       api.getUser(game.user.id).then(function(userObject){
         let userUpdated = new User(userObject)
-        console.log(userUpdated)
         game.setUser(userUpdated)
         LoginDisplay.resetForm()
         LoginDisplay.login(game.user)
