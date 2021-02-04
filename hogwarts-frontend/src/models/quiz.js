@@ -143,8 +143,8 @@ class Quiz {
         let userUpdated = new User(userObject)
         console.log(userUpdated)
         game.setUser(userUpdated)
-        game.user.resetForm()
-        game.user.login() 
+        LoginDisplay.resetForm()
+        LoginDisplay.login(game.user)
         LeaderboardDisplay.createLDisplay()
       })
     })
@@ -207,8 +207,8 @@ class Quiz {
       .then(function(userObject){
        let userUpdated = new User(userObject)
         game.setUser(userUpdated)
-        game.user.resetForm()
-        game.user.login()
+        LoginDisplay.resetForm()
+        LoginDisplay.login(game.user)
         LeaderboardDisplay.createLDisplay()
        let results = document.getElementById('results')
         results.innerHTML = `${userObject.house.name} is your new House! ${userObject.house.house_information}`;

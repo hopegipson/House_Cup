@@ -27,7 +27,7 @@ class GameButtons {
     this.explanation.innerHTML = "This trivia game asks a series of questions about the Harry Potter franchise. Consider this your O.W.L.s. You will receive 5 points for your house if you answer 80% correct, and you will receive 10 points if you answer 100% correct."
 
     let quizNamed = event.target.attributes.quiz_id.value
-    this.resetQuizSpace()
+    GameButtons.resetQuizSpace()
     this.renderQuiz(quizNamed)
     let selectedTriv = document.getElementById("trivia");
     selectedTriv.innerHTML = "Restart Trivia"
@@ -38,13 +38,14 @@ class GameButtons {
     this.explanation.innerHTML = "You will be asked a series of questions to determine if you are best suited for Hufflepuff, Gryffindor, Slytherin or Ravenclaw. If you already have a house and submit for sorting again, all points and scores you have earned for your old house will be deleted as you can no longer be counted in that house's point total."
 
     let quizNamed = event.target.attributes.quiz_id.value
-    this.resetQuizSpace()
+    GameButtons.resetQuizSpace()
     this.renderQuiz(quizNamed)
     let selectedSort = document.getElementById("sorting");
     selectedSort.innerHTML = "Restart Sorting"
     this.resetTriviaButton()
   }
-  resetQuizSpace = () => {
+
+  static resetQuizSpace = () => {
     let quizContainer = document.getElementById('contain')
     let resultsContainer = document.getElementById('results')
     quizContainer.innerHTML = ""

@@ -4,7 +4,7 @@ const game = new Game
 
 document.addEventListener("DOMContentLoaded", () => {
 LeaderboardDisplay.createLDisplay()
-buttons = new GameButtons()
+const buttons = new GameButtons()
 LoginDisplay.createLoginDisplay()
 
  });
