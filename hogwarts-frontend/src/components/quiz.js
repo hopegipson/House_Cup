@@ -127,6 +127,7 @@ class Quiz {
         game.setUser(userUpdated)
         game.user.resetForm()
         game.user.login() 
+        LeaderboardDisplay.createLDisplay()
       })
     })
     }
@@ -190,6 +191,7 @@ class Quiz {
         game.setUser(userUpdated)
         game.user.resetForm()
         game.user.login()
+        LeaderboardDisplay.createLDisplay()
        let results = document.getElementById('results')
         results.innerHTML = `${userObject.house.name} is your new House! ${userObject.house.house_information}`;
     })

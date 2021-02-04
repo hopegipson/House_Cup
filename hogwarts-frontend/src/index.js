@@ -11,8 +11,8 @@ const USERS_URL = `${BASE_URL}/users`
 const login = document.getElementById('login-form')
 const usernameField = document.getElementById('username-field')
 const patronusField = document.getElementById('patronus-field')
-
-LeaderboardDisplay.createLDisplay.call()
+LeaderboardDisplay.createLDisplay()
+//LeaderboardDisplay.createLDisplay.call()
 buttons = new GameButtons()
 renderUserOrLogin()
 
