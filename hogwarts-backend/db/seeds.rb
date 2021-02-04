@@ -12,7 +12,7 @@ User.delete_all
 House.delete_all
 Quiz.delete_all
 Question.delete_all
-
+Score.delete_all
 
 DATA = {
  house_keys: %w[name image crest primary_color secondary_color mascot element house_information small_summary traits points],
@@ -44,14 +44,32 @@ hogwarts_house_collection = []
       hogwarts_house_collection << new_house
     end
 
+user_collection = [] 
+
 hogwarts_house_collection.each do |house|
-    house_size = (SecureRandom.random_number(6) + 1).floor
+    house_size = 5
     (1..house_size).each do |poke|
         username = Faker::Name.first_name
         patronus = Faker::Creature::Animal.name
-        User.create(username: username, patronus: patronus, house_id: house.id)
+        user = User.create(username: username, patronus: patronus, house_id: house.id)
+        if user.house.id != 1
+        user_collection.push(user)
+        end
       end
     end
+
+user_collection.each do |user|
+  score_size = (SecureRandom.random_number(5) + 1).floor
+  (1..score_size).each do |poke|
+    number_right = (SecureRandom.random_number(10) + 1).floor
+    score = Score.new(number_correct: number_right, user_id: user.id)
+    score.check_score_for_house_points()
+    score.save
+  end
+end
+
+
+
 
 
     DATA2[:quizzes].each do |quiz|

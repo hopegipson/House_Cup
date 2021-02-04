@@ -141,7 +141,7 @@ body {
 }
 .quiz-container{
   position: relative;
-  height: 200px;
+  height: 250px;
   margin-top: 40px;
 }
 
@@ -4897,10 +4897,9 @@ input[type="button"].btn-block {
   min-width: 0;
   min-height: 180px;
   word-wrap: break-word;
-  background-color: #282828;
+  background-color: #000000;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem;
+  border: 2px solid #4c4747;
 }
 
 .cardAdjust {
@@ -4915,7 +4914,6 @@ input[type="button"].btn-block {
   background-color: #282828;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem;
 }
 
 .card > hr {
@@ -5440,9 +5438,10 @@ a.badge-dark:focus, a.badge-dark.focus {
 .jumbotron {
   padding: 2rem 1rem;
   margin-bottom: 2rem;
-  background-color: #282828;
+  background-color: #141313;
   border-radius: 0.3rem;
   width: 750px;
+  border:rgb(0, 0, 0)
 }
 
 @media (min-width: 576px) {
@@ -5710,8 +5709,9 @@ a.badge-dark:focus, a.badge-dark.focus {
   display: block;
   width: 300px;
   padding: 0.75rem 1.25rem;
-  background-color: #222;
-  border: 1px solid #282828;
+  background-color: rgb(0, 0, 0);
+  border: 2px solid #ffffff;
+    
 }
 
 .list-group-item:first-child {

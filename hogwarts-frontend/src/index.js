@@ -3,16 +3,14 @@ const api = new APIAdapter
 const game = new Game
 
 
-  document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     
 const BASE_URL = "http://localhost:3000"
-const HOUSES_URL = `${BASE_URL}/houses`
 const USERS_URL = `${BASE_URL}/users`
 const login = document.getElementById('login-form')
 const usernameField = document.getElementById('username-field')
 const patronusField = document.getElementById('patronus-field')
 LeaderboardDisplay.createLDisplay()
-//LeaderboardDisplay.createLDisplay.call()
 buttons = new GameButtons()
 renderUserOrLogin()
 
