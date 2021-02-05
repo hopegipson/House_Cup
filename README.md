@@ -2,7 +2,7 @@
 
 This Javascript and Rails Application allows for users to play games in the Harry Potter Universe. Users can use the Sorting Hat Quiz to assign themselves to one of the four Hogwarts Houses, and they can score points for that Hogwarts House playing the Harry Potter trivia game, in which users are awarded house points if they score highly in the trivia game.
  
-To watch a demo of the Rails Application in action you can visit: 
+To watch a demo of the Rails Application in action you can visit: https://www.youtube.com/watch?v=CgBRE5zeuco&feature=youtu.be
 
 ## Installation and Usage
 
