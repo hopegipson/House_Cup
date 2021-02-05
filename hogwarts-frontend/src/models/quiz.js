@@ -131,8 +131,7 @@ class Quiz {
       }
     });
     this.resultsContainer.innerHTML = `${this.numberCorrect} out of ${this.questions.length}`;
-    this.resultsContainer.style.color = "purple"
-      this.resultsContainer.classList.add('h5')
+   
     if (( game.user === "None") || (game.user.house.id === 1)){
       console.log("no need to save result")
     }
@@ -189,7 +188,7 @@ class Quiz {
       results.innerHTML += `${houseObject.name} has been picked as your house! You are already a member of this house.`;
     }
     else{
-      results.innerHTML += `${houseObject.name} has been picked as your house! Use the button above if you would like to join this house. Joining a house that you are not currently in will erase all previous scores and points scored for other houses.`;
+      results.innerHTML += `${houseObject.name} has been picked as your house! Use the button above if you would like to join this house. Joining a new house will erase all previous points scored for other houses.`;
       this.confirmButton = document.createElement('button')
       this.confirmButton.innerHTML = "Change Houses"
       this.confirmButton.id = 'Verify'
