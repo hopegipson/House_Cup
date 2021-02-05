@@ -56,7 +56,7 @@ class APIAdapter {
         method: 'PATCH',
        headers: this.headers,
         body: JSON.stringify({user_info_score: {
-       house_name: house}
+       house_id: house}
       })
       })
       .then(this.parseJSON)

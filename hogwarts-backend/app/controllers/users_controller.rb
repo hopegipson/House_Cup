@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 
       def update
         user = User.find_by(id: params[:id])
-        user.house = House.find_by(name: user_params_score[:house_name])
+        user.house = House.find_by(id: user_params_score[:house_id])
         user.save
         render json: UserSerializer.new(user).to_serialized_json
       end
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
       end
 
       def user_params_score
-        params.require(:user_info_score).permit(:house_name)
+        params.require(:user_info_score).permit(:house_id)
 
       end
 

@@ -104,7 +104,7 @@ class Quiz {
         if (this.id === 1){
             this.renderResults()
         }
-        else if (this.id === 2){
+        else if (this.id === 2){          
             this.renderHouseResults()
         }
     }
@@ -131,6 +131,8 @@ class Quiz {
       }
     });
     this.resultsContainer.innerHTML = `${this.numberCorrect} out of ${this.questions.length}`;
+    this.resultsContainer.style.color = "purple"
+      this.resultsContainer.classList.add('h5')
     if (( game.user === "None") || (game.user.house.id === 1)){
       console.log("no need to save result")
     }
@@ -146,6 +148,62 @@ class Quiz {
     })
     }
 
+  }
+
+  showWarningAboutChangingHouse = () => {
+    api.getHouse(this.chosenHouse).then((houseObject) => {
+      this.slides[this.currentSlide].classList.remove('slide-activated');
+    this.prevBtn.style.display = 'none';
+    this.submitBtn.style.display = 'none';
+    this.resultSlide = document.createElement('div')
+    this.resultSlide.classList.add('slide2');
+    let li5 = document.createElement('li')
+    li5.classList.add('list-group-item2')
+    li5.innerHTML = `${houseObject.house_information}`
+    let ul1 = document.createElement('ul')
+    ul1.classList.add('list-group')
+    ul1.classList.add('row')
+    ul1.classList.add('list-group-flush')
+    ul1.appendChild(li5)
+    let row = document.createElement('div')
+    row.classList.add('row')
+    this.resultSlide.appendChild(row)
+    this.resultSlide.appendChild(ul1)
+      //This will need to be changed to image of the specific Thing
+    this.resultSlide.style.backgroundImage = "url('/Users/hopegipson/hogwarts-project/hogwarts-frontend/images/gryffindorsort.png')";
+    this.resultSlide.classList.add('slide-activated');
+    let divbreaks = document.createElement('div')
+    for (let i = 0; i < 4; i++) {
+      divbreaks.appendChild(document.createElement("br"));
+    }  
+    const results = document.getElementById('results')
+    results.appendChild(divbreaks)
+
+
+    if (game.user === "None"){
+      console.log("no need to save result")
+
+      results.innerHTML += `${houseObject.name} has been picked for as your hypothetical house! To save this result and join the house to unlock more information, please create a user.`;
+    }
+    else if (game.user.house.id == this.chosenHouse){
+      results.innerHTML += `${houseObject.name} has been picked for as your hypothetical house! You are already a member of this house.`;
+    }
+    else{
+      results.innerHTML += `${houseObject.name} has been picked for as your hypothetical house! Please verify if you would like to join this house. Joining another house will erase all previous scores and points scored for other houses.`;
+      this.confirmButton = document.createElement('button')
+      this.confirmButton.innerHTML = "Change Houses"
+      this.confirmButton.id = 'Verify'
+      this.confirmButton.classList.add("btn")
+      this.confirmButton.classList.add("btn-outline-primary")
+      this.confirmButton.style.position = "absolute";
+
+      this.confirmButton.style.right = "100px";
+
+      this.confirmButton.addEventListener("click", this.addHouseToUser)
+      this.resultSlide.appendChild(this.confirmButton)
+    }
+    this.quizElement.appendChild(this.resultSlide)
+  })
   }
 
   renderHouseResults = () =>{
@@ -178,36 +236,21 @@ class Quiz {
       }
     });
 
-   let chosenHouse = this.calculateHouseResults()
-
-  
-      if (game.user === "None"){
-        console.log("no need to save result")
-        let results = document.getElementById('results')
-        results.innerHTML = `${chosenHouse} has been picked for as your hypothetical house! To save this result and join the house to unlock more information, please create a user.`;
-
-      }
-      else if (game.user.house.name == chosenHouse) {
-        let results = document.getElementById('results')
-        results.innerHTML = `${game.user.house.name} has been picked for you again! You are already in the house of ${game.user.house.name}, and will not switch houses. ${game.user.house.house_information}`;
-      }
-      else {
-        this.addHouseToUser(game.user.id, chosenHouse)
-      }
+   this.chosenHouse = this.calculateHouseResults()
+    this.showWarningAboutChangingHouse()
     }
 
-    addHouseToUser = (user, house) => {
+    addHouseToUser = () => {
+      this.confirmButton.remove()
       game.user.removeScores()
       
-      api.patchUserHouse(user, house)
+      api.patchUserHouse(game.user.id, this.chosenHouse)
       .then(function(userObject){
        let userUpdated = new User(userObject)
         game.setUser(userUpdated)
         LoginDisplay.resetForm()
         LoginDisplay.login(game.user)
         LeaderboardDisplay.createLDisplay()
-       let results = document.getElementById('results')
-        results.innerHTML = `${userObject.house.name} is your new House! ${userObject.house.house_information}`;
     })
     }
 
@@ -217,11 +260,12 @@ class Quiz {
 calculateHouseResults = () =>{
      let largestNumber = Math.max(this.gryffindorCount, this.slytherinCount, this.hufflepuffCount, this.ravenclawCount)
       let house = []
-      if (this.gryffindorCount === largestNumber){ house.push("Gryffindor")}
-      if (this.slytherinCount === largestNumber){ house.push("Slytherin")}
-      if (this.ravenclawCount === largestNumber){ house.push("Ravenclaw")}
-      if (this.hufflepuffCount === largestNumber){ house.push("Hufflepuff")}
+      if (this.gryffindorCount === largestNumber){ house.push(2)}
+      if (this.slytherinCount === largestNumber){ house.push(3)}
+      if (this.ravenclawCount === largestNumber){ house.push(4)}
+      if (this.hufflepuffCount === largestNumber){ house.push(5)}
       if (house.length === 1){
+
         return house[0]
       }
       else {
