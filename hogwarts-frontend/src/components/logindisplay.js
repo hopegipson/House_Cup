@@ -38,8 +38,8 @@ class LoginDisplay {
       }
    
       checkToSeeIfUserExists = () => {
-        let userUsername = this.usernameField.value
-        let userPatronus = this.patronusField.value
+        let userUsername = Helper.makeNameString(this.usernameField.value)
+        let userPatronus = this.patronusField.value.toLowerCase() 
         api.getUsers().then(json => this.lookForUser(json, userUsername, userPatronus))
         } 
 
@@ -52,7 +52,6 @@ class LoginDisplay {
         })
 
         }
-
 
     static login = (user) => {
         const breaks = document.getElementById('breaks')
@@ -141,7 +140,8 @@ class LoginDisplay {
         }
         let li4 = document.createElement('li')
         li4.classList.add('list-group-item')
-        li4.innerHTML = `Patronus: ${user.patronus}`
+        let patronusCap = Helper.makeNameString(user.patronus)
+        li4.innerHTML = `Patronus: ${patronusCap}`
 
         let logoutBtn = document.createElement('button')
         logoutBtn.classList.add('btn')
