@@ -12,6 +12,7 @@ class CreateHouses < ActiveRecord::Migration[6.0]
       t.string :small_summary
       t.string :traits
       t.integer :points, default: 0
+      t.string :picture
       t.timestamps
     end
   end

@@ -80,7 +80,7 @@ class LoginDisplay {
         h5.innerHTML = `${user.house_points} points earned for the House Cup.`
         }
         else{
-          h5.innerHTML = "Sorted Users cannot earn points"
+          h5.innerHTML = "Unsorted Users cannot earn points"
 
         }
         let h6 = document.createElement('h6')

@@ -169,8 +169,8 @@ class Quiz {
     row.classList.add('row')
     this.resultSlide.appendChild(row)
     this.resultSlide.appendChild(ul1)
-      //This will need to be changed to image of the specific Thing
-    this.resultSlide.style.backgroundImage = "url('/Users/hopegipson/hogwarts-project/hogwarts-frontend/images/gryffindorsort.png')";
+    let urlPicture = houseObject.picture
+    this.resultSlide.style.backgroundImage = `url('${houseObject.picture}')`;
     this.resultSlide.classList.add('slide-activated');
     let divbreaks = document.createElement('div')
     for (let i = 0; i < 4; i++) {
@@ -183,13 +183,13 @@ class Quiz {
     if (game.user === "None"){
       console.log("no need to save result")
 
-      results.innerHTML += `${houseObject.name} has been picked for as your hypothetical house! To save this result and join the house to unlock more information, please create a user.`;
+      results.innerHTML += `${houseObject.name} has been picked as your hypothetical house! To save this result and have the option to join the house to unlock more information, please create a user.`;
     }
     else if (game.user.house.id == this.chosenHouse){
-      results.innerHTML += `${houseObject.name} has been picked for as your hypothetical house! You are already a member of this house.`;
+      results.innerHTML += `${houseObject.name} has been picked as your house! You are already a member of this house.`;
     }
     else{
-      results.innerHTML += `${houseObject.name} has been picked for as your hypothetical house! Please verify if you would like to join this house. Joining another house will erase all previous scores and points scored for other houses.`;
+      results.innerHTML += `${houseObject.name} has been picked as your house! Use the button above if you would like to join this house. Joining a house that you are not currently in will erase all previous scores and points scored for other houses.`;
       this.confirmButton = document.createElement('button')
       this.confirmButton.innerHTML = "Change Houses"
       this.confirmButton.id = 'Verify'
@@ -243,6 +243,7 @@ class Quiz {
     addHouseToUser = () => {
       this.confirmButton.remove()
       game.user.removeScores()
+      this.resultsContainer.innerHTML = ""
       
       api.patchUserHouse(game.user.id, this.chosenHouse)
       .then(function(userObject){

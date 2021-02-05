@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 5) do
     t.string "small_summary"
     t.string "traits"
     t.integer "points", default: 0
+    t.string "picture"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
