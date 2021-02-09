@@ -1,24 +1,29 @@
-# README
+# hogwarts-project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This Javascript and Rails Application allows for users to play games in the Harry Potter Universe. Users can use the Sorting Hat Quiz to assign themselves to one of the four Hogwarts Houses, and they can score points for that Hogwarts House playing the Harry Potter trivia game, in which users are awarded house points if they score highly in the trivia game.
+ 
+To watch a demo of the Rails Application in action you can visit: https://www.youtube.com/watch?v=CgBRE5zeuco&feature=youtu.be
 
-Things you may want to cover:
+## Installation and Usage
 
-* Ruby version
+To use this app:
+    -The app will be using localhost:3000 by default.
+    -cd into hogwarts-backend
+    -Migrate the database tables with 'rails db:migrate'
+    -Add seed data with 'rails db:seed'
+    -Start the server with 'rails s'
+    -Open index.html and start playing like a Hogwarts student!
 
-* System dependencies
 
-* Configuration
+## Contributing
 
-* Database creation
+Bug reports and pull requests are welcome on GitHub at https://github.com/hopegipson/hogwarts-project. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/hopegipson/hogwarts-project/blob/main/CODE_OF_CONDUCT.md).
 
-* Database initialization
 
-* How to run the test suite
+## License
 
-* Services (job queues, cache servers, search engines, etc.)
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
-* Deployment instructions
+## Code of Conduct
 
-* ...
+Everyone interacting in the Hogwarts Cup project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/hopegipson/hogwarts-project/blob/main/CODE_OF_CONDUCT.md).
