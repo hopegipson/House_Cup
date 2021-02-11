@@ -1,8 +1,9 @@
 class LeaderboardDisplay {
 
-    static createLDisplay = () => {
+    static createLDisplay = (users) => {
         const leaderboardDisplay = new LeaderboardDisplay
-        leaderboardDisplay.createUserLeaderboard()
+        leaderboardDisplay.nonUnsortedUsers = users.filter(user => user.house.id != 1)
+        leaderboardDisplay.createUserLeaderboard(0, "User Leaderboard")
         leaderboardDisplay.gryffindorBanner = document.getElementById('gryffindorbutton')
         leaderboardDisplay.slytherinBanner = document.getElementById('slytherinbutton')
         leaderboardDisplay.hufflepuffBanner = document.getElementById('hufflepuffbutton')
@@ -12,69 +13,13 @@ class LeaderboardDisplay {
         leaderboardDisplay.addListenerstoButtons()
    }
 
-    createUserLeaderboard = () => {
-        api.getUsers().then((users => {
-            let nonUnsortedUsers = []
-            users.forEach(user => {
-            if (user.house.id != 1){
-            nonUnsortedUsers.push(user)
-            }
-        })
-        this.leaderboardUsers = new Leaderboard(nonUnsortedUsers, "User Leaderboard"); 
-       this.leaderboardUsers.appendLeaderBoardToDOM()
-    }))
-    }
-
-    createGryffindorLeaderboard = () => {
-        api.getUsers().then((users => {
-            let GryffindorUsers = []
-            users.forEach(user => {
-                if (user.house.id === 2){
-                    GryffindorUsers.push(user)
-            }
-            })
-        this.leaderboardGryffindor = new Leaderboard(GryffindorUsers, "Gryffindor Leaderboard"); 
-        this.leaderboardGryffindor.appendLeaderBoardToDOM()
-        }))
-    }
-
-    createSlytherinLeaderboard = () => {
-        api.getUsers().then((users => {
-            let SlytherinUsers = []
-            users.forEach(user => {
-                if (user.house.id === 3){
-                    SlytherinUsers.push(user)
-            }
-            })
-        this.leaderboardSlytherin = new Leaderboard(SlytherinUsers, "Slytherin Leaderboard"); 
-        this.leaderboardSlytherin.appendLeaderBoardToDOM()
-        }))
-    }
-
-    createRavenclawLeaderboard = () => {
-        api.getUsers().then((users => {
-            let RavenclawUsers = []
-            users.forEach(user => {
-                if (user.house.id === 4){
-                    RavenclawUsers.push(user)
-            }
-            })
-        this.leaderboardRavenclaw = new Leaderboard(RavenclawUsers, "Ravenclaw Leaderboard"); 
-        this.leaderboardRavenclaw.appendLeaderBoardToDOM()
-        }))
-    }
-
-    createHufflepuffLeaderboard = () => {
-        api.getUsers().then((users => {
-            let HufflepuffUsers = []
-            users.forEach(user => {
-                if (user.house.id === 5){
-                    HufflepuffUsers.push(user)
-            }
-            })
-        this.leaderboardHufflepuff = new Leaderboard(HufflepuffUsers, "Hufflepuff Leaderboard"); 
-        this.leaderboardHufflepuff.appendLeaderBoardToDOM()
-        }))
+    createUserLeaderboard = (id, title) => {
+        let selectedUsers
+        if (id != 0)  {selectedUsers = this.nonUnsortedUsers.filter(user => user.house.id === id) }
+        else {selectedUsers = this.nonUnsortedUsers}
+        let usersForLeaderBoard = selectedUsers.map(user => {return new User(user)})
+        this.leaderboardUsers = new Leaderboard(usersForLeaderBoard, title); 
+        this.leaderboardUsers.appendLeaderBoardToDOM()
     }
 
     createHouseLeaderboard = () => {
@@ -90,17 +35,12 @@ class LeaderboardDisplay {
             }))
     }
 
-
     addListenerstoButtons = () => {
-        this.gryffindorBanner.addEventListener("click", this.createGryffindorLeaderboard)
-        this.slytherinBanner.addEventListener("click", this.createSlytherinLeaderboard)
-        this.ravenclawBanner.addEventListener("click", this.createRavenclawLeaderboard)
-        this.hufflepuffBanner.addEventListener("click", this.createHufflepuffLeaderboard)
-        this.hogwartsBanner.addEventListener("click", this.createUserLeaderboard)
+        this.gryffindorBanner.addEventListener("click", this.createUserLeaderboard.bind(event, 2, "Gryffindor Leaderboard"))
+        this.slytherinBanner.addEventListener("click", this.createUserLeaderboard.bind(event, 3, "Slytherin Leaderboard"))
+        this.ravenclawBanner.addEventListener("click", this.createUserLeaderboard.bind(event, 4, "Ravenclaw Leaderboard"))
+        this.hufflepuffBanner.addEventListener("click", this.createUserLeaderboard.bind(event, 5, "Hufflepuff Leaderboard"))
+        this.hogwartsBanner.addEventListener("click", this.createUserLeaderboard.bind(event, 0, "Users Leaderboard"))
         this.housecupBanner.addEventListener("click", this.createHouseLeaderboard)
-
     }
-
-
-
 }

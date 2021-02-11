@@ -142,7 +142,9 @@ class Quiz {
         game.setUser(userUpdated)
         LoginDisplay.resetForm()
         LoginDisplay.login(game.user)
-        LeaderboardDisplay.createLDisplay()
+        api.getUsers().then((users => {
+        LeaderboardDisplay.createLDisplay(users)
+        }))
       })
     })
     }
@@ -250,7 +252,9 @@ class Quiz {
         game.setUser(userUpdated)
         LoginDisplay.resetForm()
         LoginDisplay.login(game.user)
-        LeaderboardDisplay.createLDisplay()
+        api.getUsers().then((users => {
+          LeaderboardDisplay.createLDisplay(users)
+          }))
     })
     }
 

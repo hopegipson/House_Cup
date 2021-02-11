@@ -26,11 +26,13 @@ class User {
     }
 
     getHousePoints = () => {
-      let numberArray = []
-      this.scores.forEach(score => {
-       numberArray.push(score.house_points)
-      })
-      this.house_points = [...numberArray].reduce((a, b) => a + b, 0)
+    // let numberArray = this.scores.map(score => {
+    //   return score.house_points})
+    this.house_points =  this.scores.reduce((a, b) => a + b.house_points, 0)
+    return this.house_points
+
+      this.house_points =  this.scores.map(score => {
+        return score.house_points}).reduce((a, b) => a + b, 0)
     }
 
   removeScores = () => {
@@ -39,6 +41,7 @@ class User {
     )
     this.scores =[]
   }
+
 
 
 }
