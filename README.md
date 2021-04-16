@@ -5,6 +5,7 @@ This Javascript and Rails Application allows for users to play games in the Harr
 
  
 To watch a demo of the Rails Application in action you can visit: 
+
 <a href="https://www.youtube.com/watch?v=CgBRE5zeuco&feature=youtu.be
 " target="_blank"><img src="http://img.youtube.com/vi/CgBRE5zeuco/0.jpg" 
 alt="Demo of Rails App" width="240" height="180" border="10" /></a>
