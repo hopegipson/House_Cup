@@ -14,6 +14,7 @@ alt="Demo of Rails App" width="240" height="180" border="10" /></a>
 ## Installation and Usage
 
 To use this app:
+
     -The app will be using localhost:3000 by default.
     -cd into hogwarts-backend
     -Migrate the database tables with 'rails db:migrate'
