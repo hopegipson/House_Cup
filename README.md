@@ -10,6 +10,10 @@ To watch a demo of the Rails Application in action you can visit:
 " target="_blank"><img src="http://img.youtube.com/vi/CgBRE5zeuco/0.jpg" 
 alt="Demo of Rails App" width="240" height="180" border="10" /></a>
 
+Blog Post with Further Explanation on the Quizzes:
+<a href="
+https://hopegipson.github.io/breaking_down_the_magic_of_a_hogwarts_quiz"/> Here</a>
+
 
 ## Installation and Usage
 
