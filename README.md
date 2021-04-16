@@ -1,8 +1,14 @@
 # hogwarts-project
 
 This Javascript and Rails Application allows for users to play games in the Harry Potter Universe. Users can use the Sorting Hat Quiz to assign themselves to one of the four Hogwarts Houses, and they can score points for that Hogwarts House playing the Harry Potter trivia game, in which users are awarded house points if they score highly in the trivia game.
+
+
  
-To watch a demo of the Rails Application in action you can visit: https://www.youtube.com/watch?v=CgBRE5zeuco&feature=youtu.be
+To watch a demo of the Rails Application in action you can visit: 
+<a href="https://www.youtube.com/watch?v=CgBRE5zeuco&feature=youtu.be
+" target="_blank"><img src="http://img.youtube.com/vi/CgBRE5zeuco/0.jpg" 
+alt="Demo of Rails App" width="240" height="180" border="10" /></a>
+
 
 ## Installation and Usage
 
@@ -17,7 +23,7 @@ To use this app:
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/hopegipson/hogwarts-project. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/hopegipson/hogwarts-project/blob/main/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub <a href="https://github.com/hopegipson/hogwarts-project"/> here.</a> This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/hopegipson/hogwarts-project/blob/main/CODE_OF_CONDUCT.md).
 
 
 ## License
