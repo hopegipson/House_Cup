@@ -4,8 +4,6 @@
 # House_Cup
 
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/hopegipson/House_Cup) 
-![GitHub language count](https://img.shields.io/github/languages/count/hopegipson/House_Cup) 
-![GitHub top language](https://img.shields.io/github/languages/top/hopegipson/House_Cup)
 ![GitHub contributors](https://img.shields.io/github/contributors/hopegipson/House_Cup)
 ![GitHub issues](https://img.shields.io/github/issues-raw/hopegipson/House_Cup)
 ![GitHub last commit](https://img.shields.io/github/last-commit/hopegipson/House_Cup)
@@ -46,6 +44,12 @@ To use this app:
 
 Bug reports and pull requests are welcome on GitHub <a href="https://github.com/hopegipson/House_Cup"/> here.</a> This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/hopegipson/House_Cup/blob/main/CODE_OF_CONDUCT.md).
 
+    -Fork this repository.
+    -Create a branch: git checkout -b <branch_name>.
+    -Make your changes and commit them: git commit -m '<commit_message>'
+    -Push to the original branch: git push origin Spotify_Clone/master
+    -Create the pull request.
+
 
 ## License
 
@@ -54,3 +58,10 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the Hogwarts Cup project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/hopegipson/House_Cup/blob/main/CODE_OF_CONDUCT.md).
+
+
+## Languages Used
+
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=hopegipson&layout=compact&theme=radical)](https://github.com/hopegipson/House_Cup)
+
+
