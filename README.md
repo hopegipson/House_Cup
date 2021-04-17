@@ -1,7 +1,7 @@
 <img src="https://i.imgur.com/YAiTbMs.png" width="100%" /> </img>
 
 
-# House-Cup
+# House_Cup
 
 This Javascript and Rails Application allows for users to play games in the Harry Potter Universe. Users can use the Sorting Hat Quiz to assign themselves to one of the four Hogwarts Houses, and they can score points for that Hogwarts House playing the Harry Potter trivia game, in which users are awarded house points if they score highly in the trivia game.
 
@@ -32,7 +32,7 @@ To use this app:
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub <a href="https://github.com/hopegipson/House-Cup"/> here.</a> This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/hopegipson/House-Cup/blob/main/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub <a href="https://github.com/hopegipson/House_Cup"/> here.</a> This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/hopegipson/House_Cup/blob/main/CODE_OF_CONDUCT.md).
 
 
 ## License
@@ -41,4 +41,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Hogwarts Cup project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/hopegipson/House-Cup/blob/main/CODE_OF_CONDUCT.md).
+Everyone interacting in the Hogwarts Cup project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/hopegipson/House_Cup/blob/main/CODE_OF_CONDUCT.md).
