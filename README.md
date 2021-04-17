@@ -30,17 +30,18 @@ Blog Post with Further Explanation on the Quizzes:
 https://hopegipson.github.io/breaking_down_the_magic_of_a_hogwarts_quiz"/> Here</a>
 
 
-## Installation and Usage
+## Installation
 
-To use this app:
-
+    -Clone this repo
     -The app will be using localhost:3000 by default.
+    
+## Usage
+
     -cd into hogwarts-backend
     -Migrate the database tables with 'rails db:migrate'
     -Add seed data with 'rails db:seed'
     -Start the server with 'rails s'
     -Open index.html and start playing like a Hogwarts student!
-
 
 ## Contributing
 
