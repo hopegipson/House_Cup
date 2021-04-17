@@ -63,8 +63,3 @@ The gem is available as open source under the terms of the [MIT License](https:/
 Everyone interacting in the Hogwarts Cup project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/hopegipson/House_Cup/blob/main/CODE_OF_CONDUCT.md).
 
 
-## Languages Used
-
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=hopegipson&layout=compact&theme=radical)](https://github.com/hopegipson/House_Cup)
-
-
