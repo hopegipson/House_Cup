@@ -3,6 +3,16 @@
 
 # House_Cup
 
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/hopegipson/House_Cup) 
+![GitHub language count](https://img.shields.io/github/languages/count/hopegipson/House_Cup) 
+![GitHub top language](https://img.shields.io/github/languages/top/hopegipson/House_Cup)
+![GitHub contributors](https://img.shields.io/github/contributors/hopegipson/House_Cup)
+![GitHub issues](https://img.shields.io/github/issues-raw/hopegipson/House_Cup)
+![GitHub last commit](https://img.shields.io/github/last-commit/hopegipson/House_Cup)
+![GitHub forks](https://img.shields.io/github/forks/hopegipson/House_Cup?style=social)
+![GitHub Repo stars](https://img.shields.io/github/stars/hopegipson/House_Cup?style=social) 
+![YouTube Video Views](https://img.shields.io/youtube/views/CgBRE5zeuco?style=social)
+
 This Javascript and Rails Application allows for users to play games in the Harry Potter Universe. Users can use the Sorting Hat Quiz to assign themselves to one of the four Hogwarts Houses, and they can score points for that Hogwarts House playing the Harry Potter trivia game, in which users are awarded house points if they score highly in the trivia game.
 
 
