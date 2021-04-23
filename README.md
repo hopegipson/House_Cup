@@ -27,7 +27,7 @@ alt="Demo of Rails App" width="240" height="180" border="10" /></a>
 
 Blog Post with Further Explanation on the Quizzes:
 <a href="
-https://hopegipson.github.io/breaking_down_the_magic_of_a_hogwarts_quiz"/> Here</a>
+https://thehopegipson.medium.com/breaking-down-the-magic-of-a-hogwarts-quiz-javascript-and-rails-bfe521f2b856"/> Here</a>
 
 
 ## Installation
